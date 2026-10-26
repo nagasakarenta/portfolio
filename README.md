@@ -36,9 +36,9 @@ Featured セクションのデバイス枠には IPA 試験トレーナーの公
 
 1. `tools/gas-contact-form.gs` の内容を https://script.google.com の新しいプロジェクトに貼り付ける
 2. デプロイ → 新しいデプロイ → ウェブアプリ（実行: 自分 / アクセス: 全員）→ URL をコピー
-3. `script.js` の `CONTACT_ENDPOINT = ''` にその URL を入れて push
+3. `script.js` の `CONTACT_ENDPOINT` にその URL を入れて push
 
-URL を入れるまでは、送信ボタンは入力内容を本文に入れた状態でメールアプリを開く動作になります。
+設定済み（2026-10-26、GAS プロジェクト名 `portfolio-contact`）。GAS 側のコードを変えたら「デプロイを管理」から新バージョンで再デプロイすれば URL はそのままです。URL を空にすると、送信ボタンは入力内容を本文に入れてメールアプリを開く動作に戻ります。
 
 ## 公開する（GitHub Pages）
 

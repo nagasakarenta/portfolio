@@ -23,7 +23,7 @@
   <meta name="theme-color" content="#000000" />
   <link rel="icon" href="assets/favicon-64.png" type="image/png" sizes="64x64" />
   <link rel="apple-touch-icon" href="assets/icon-180.png" />
-  <link rel="stylesheet" href="styles.css?v=12" />
+  <link rel="stylesheet" href="styles.css?v=14" />
 </head>
 <body class="has-intro">
 
@@ -628,6 +628,29 @@
         <p class="cform__note">送信内容は nagasakarenta@gmail.com にだけ届きます。</p>
       </form>
 
+      <!-- "sent" motion: the letter folds, becomes a paper plane and flies off -->
+      <div class="sendfx" id="sendfx" aria-hidden="true" hidden>
+        <div class="sendfx__stage">
+          <div class="sendfx__letter">
+            <span class="sendfx__line"></span><span class="sendfx__line"></span><span class="sendfx__line sendfx__line--short"></span>
+          </div>
+          <svg class="sendfx__plane" viewBox="0 0 64 64" fill="none">
+            <defs>
+              <linearGradient id="planeGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#6ec1ff"/><stop offset=".55" stop-color="#a98bff"/><stop offset="1" stop-color="#ff8fb1"/>
+              </linearGradient>
+            </defs>
+            <path d="M6 30 58 8 40 58l-9-19z" fill="url(#planeGrad)"/>
+            <path d="M31 39 58 8" stroke="rgba(0,0,0,.35)" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M31 39v12l6-8" fill="rgba(0,0,0,.25)"/>
+          </svg>
+          <svg class="sendfx__trail" viewBox="0 0 400 120" fill="none">
+            <path d="M0 100 C 80 100, 120 20, 200 40 S 330 10, 400 0" stroke="url(#planeGrad)" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 10"/>
+          </svg>
+          <span class="sendfx__spark"></span><span class="sendfx__spark"></span><span class="sendfx__spark"></span><span class="sendfx__spark"></span><span class="sendfx__spark"></span><span class="sendfx__spark"></span>
+        </div>
+      </div>
+
       <div class="cform__done" id="cformDone" hidden>
         <div class="cform__check" aria-hidden="true">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -639,6 +662,6 @@
     </div>
   </dialog>
 
-  <script src="script.js?v=10" defer></script>
+  <script src="script.js?v=12" defer></script>
 </body>
 </html>

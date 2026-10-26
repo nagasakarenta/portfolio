@@ -484,7 +484,7 @@
      Messages are POSTed as JSON to CONTACT_ENDPOINT — a Google Apps Script web app
      (see tools/gas-contact-form.gs). While the endpoint is empty, "送信する" falls back
      to opening the visitor's mail app with the message prefilled. */
-  const CONTACT_ENDPOINT = '';
+  const CONTACT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwSNHaVRYosE9O7AsKqYetga2_FDPUq8sB9y9lDGtNYnX3jgbtieVuQsBivp5haA8JR/exec';
   const CONTACT_EMAIL = 'nagasakarenta@gmail.com';
   const cform = $('#contactDialog');
   if (cform && typeof cform.showModal === 'function') {
@@ -520,10 +520,19 @@
       return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     };
     const showError = (msg) => { errBox.textContent = msg; errBox.hidden = false; };
+    const fx = $('#sendfx');
     const showDone = (p) => {
-      form.hidden = true; done.hidden = false;
       $('#cformDoneName').textContent = p.name ? `${p.name} さん、` : '';
       try { localStorage.setItem('contactSentAt', String(Date.now())); } catch (_) {}
+      form.hidden = true;
+      if (fx && !reduceMotion) {
+        // replay: re-insert the stage so the CSS animations restart, then reveal the thanks card
+        const stage = fx.firstElementChild; const clone = stage.cloneNode(true); stage.replaceWith(clone);
+        fx.hidden = false;
+        setTimeout(() => { fx.hidden = true; done.hidden = false; }, 3300);
+      } else {
+        done.hidden = false;
+      }
     };
     // keep the "メールアプリで送る" link in sync with what was typed
     form.addEventListener('input', () => { $('#cformMailto').href = mailtoFor(payload()); });

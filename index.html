@@ -23,7 +23,7 @@
   <meta name="theme-color" content="#000000" />
   <link rel="icon" href="assets/favicon-64.png" type="image/png" sizes="64x64" />
   <link rel="apple-touch-icon" href="assets/icon-180.png" />
-  <link rel="stylesheet" href="styles.css?v=24" />
+  <link rel="stylesheet" href="styles.css?v=25" />
 </head>
 <body class="has-intro">
 
@@ -510,6 +510,22 @@
     </div>
   </footer>
 
+  <!-- ====== Buddy: floating avatar that opens the contact form ====== -->
+  <div class="buddy" id="buddy">
+    <div class="buddy__bubble" id="buddyBubble" role="status">
+      <span id="buddyText">こんにちは。AI 導入や開発の相談、気軽にどうぞ。</span>
+      <button type="button" class="buddy__dismiss" id="buddyDismiss" aria-label="吹き出しを閉じる">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <button type="button" class="buddy__btn" id="buddyBtn" data-contact aria-label="メッセージを送る" title="メッセージを送る">
+      <img src="assets/avatar.jpg" alt="" width="64" height="64" />
+      <span class="buddy__badge" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 20l18-8L3 4l3 8-3 8zm3-8h6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </button>
+  </div>
+
   <!-- ====== Profile card (opened from the nav brand) ====== -->
   <dialog class="pcard" id="profileCard" aria-labelledby="pcardName">
     <div class="pcard__inner">
@@ -665,6 +681,6 @@
     </div>
   </dialog>
 
-  <script src="script.js?v=19" defer></script>
+  <script src="script.js?v=20" defer></script>
 </body>
 </html>

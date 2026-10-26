@@ -638,6 +638,41 @@
     }
   }
 
+
+  /* ---------- Buddy: floating avatar in the corner ---------- */
+  const buddy = $('#buddy');
+  if (buddy) {
+    const hero = $('.hero'), contact = $('#contact');
+    let shown = false, bubbleDone = false, heroOut = false, contactIn = false, talkTimer = 0;
+    try { bubbleDone = sessionStorage.getItem('buddyBubbleDone') === '1'; } catch (_) {}
+    const sync = () => {
+      if (!shown && heroOut && !document.documentElement.classList.contains('is-intro')) {
+        shown = true;
+        setTimeout(() => {
+          buddy.classList.add('is-in');
+          if (!bubbleDone) {
+            talkTimer = setTimeout(() => {
+              buddy.classList.add('is-talking');
+              talkTimer = setTimeout(() => buddy.classList.remove('is-talking'), 7000);
+            }, 900);
+          }
+        }, 1200);
+      }
+      buddy.classList.toggle('is-hidden', contactIn);   // the section already has the big CTA
+    };
+    if ('IntersectionObserver' in window) {
+      if (hero) new IntersectionObserver((es) => { heroOut = !es[0].isIntersecting; sync(); }, { threshold: 0.1 }).observe(hero);
+      if (contact) new IntersectionObserver((es) => { contactIn = es[0].isIntersecting; sync(); }, { threshold: 0.2 }).observe(contact);
+    } else { heroOut = true; sync(); }
+    const stopTalking = () => {
+      clearTimeout(talkTimer); buddy.classList.remove('is-talking'); bubbleDone = true;
+      try { sessionStorage.setItem('buddyBubbleDone', '1'); } catch (_) {}
+    };
+    $('#buddyDismiss').addEventListener('click', (e) => { e.stopPropagation(); stopTalking(); });
+    $('#buddyBubble').addEventListener('click', () => { stopTalking(); $('#buddyBtn').click(); });
+    $('#buddyBtn').addEventListener('click', stopTalking);
+  }
+
   /* ---------- Active nav link while scrolling ---------- */
   const sections = $$('main section[id]');
   const navAnchors = $$('a[href^="#"]', links).filter(a => a.getAttribute('href') !== '#top');

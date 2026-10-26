@@ -596,37 +596,30 @@
   })();
 
 
-  /* ---------- Timeline: draw the history from the oldest entry (bottom) upward ---------- */
+  /* ---------- Timeline: once in view, draw the line from the oldest entry (bottom) up to now ---------- */
   const timeline = $('.timeline');
   if (timeline) {
     const items = $$('.timeline__item', timeline);
-    const setLit = (p) => {
-      const rect = timeline.getBoundingClientRect();
-      const lineTop = rect.top + 10, lineLen = Math.max(1, rect.height - 20);
-      items.forEach(it => {
-        const dotY = it.getBoundingClientRect().top + 14;          // centre of the dot
-        const f = (lineTop + lineLen - dotY) / lineLen;             // 0 at the bottom (oldest) … 1 at the top (newest)
-        it.classList.toggle('is-lit', p >= Math.max(0, Math.min(1, f)) - 0.02);
-      });
-    };
     if (reduceMotion) {
-      timeline.style.setProperty('--p', '1'); items.forEach(it => it.classList.add('is-lit'));
+      items.forEach(it => it.classList.add('is-lit'));
     } else {
-      let ticking = false, active = false;
-      const paint = () => {
-        ticking = false;
-        const vh = window.innerHeight, r = timeline.getBoundingClientRect();
-        // 0 when the list top reaches 85% of the viewport, 1 when its bottom reaches 60%
-        const p = Math.max(0, Math.min(1, (vh * 0.85 - r.top) / (vh * 0.25 + r.height)));
-        timeline.style.setProperty('--p', p.toFixed(4));
-        timeline.style.setProperty('--head', p > 0.01 && p < 0.995 ? '1' : '0');
-        setLit(p);
+      const DRAW_MS = 1600;
+      const play = () => {
+        timeline.classList.add('is-drawing');
+        const rect = timeline.getBoundingClientRect();
+        const lineBottom = rect.top + rect.height - 10, lineLen = Math.max(1, rect.height - 20);
+        items.forEach(it => {
+          const dotY = it.getBoundingClientRect().top + 14;            // centre of the dot
+          const f = Math.max(0, Math.min(1, (lineBottom - dotY) / lineLen));   // 0 = bottom (oldest) … 1 = top (newest)
+          // the CSS easing is ease-in-out-ish; approximate its inverse so dots light exactly when the tip passes them
+          const t = f < 0.5 ? Math.sqrt(f / 2) : 1 - Math.sqrt((1 - f) / 2);
+          setTimeout(() => it.classList.add('is-lit'), Math.round(t * DRAW_MS));
+        });
       };
-      const onScroll = () => { if (!active || ticking) return; ticking = true; requestAnimationFrame(paint); };
-      new IntersectionObserver((es) => { active = es.some(e => e.isIntersecting); if (active) onScroll(); }, { rootMargin: '30% 0px 30% 0px' }).observe(timeline);
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onScroll);
-      paint();
+      const tio = new IntersectionObserver((es) => {
+        if (es.some(e => e.isIntersecting)) { tio.disconnect(); play(); }
+      }, { threshold: 0.25 });
+      tio.observe(timeline);
     }
   }
 

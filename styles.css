@@ -1138,45 +1138,49 @@ html.modal-open, html.modal-open body { overflow: hidden; }
 html.modal-open body { position: fixed; left: 0; right: 0; width: 100%; }
 
 /* ==========================================================
-   Experience: history is drawn from the oldest entry (bottom) up to now (top).
-   --p (0..1) is set by script.js from the scroll position.
+   Experience: when the list comes into view, the line is drawn once from the
+   oldest entry (bottom, 2020.12) up to now (top) and the dots light up in that order.
+   Text is always fully visible; only the line and dots animate.
    ========================================================== */
-.timeline { --p: 0; }
+.timeline { --draw: 1.6s; }
 .timeline::before {
   width: 2px; left: -0.5px; top: 10px; bottom: 10px;
   background: linear-gradient(0deg, #0071e3, #8a5cff 60%, #ff5c8a);
-  transform-origin: bottom; transform: scaleY(var(--p));
+  transform-origin: bottom; transform: scaleY(0);
   animation: none; transition: none;
 }
+.timeline.is-drawing::before { animation: tl-grow var(--draw) cubic-bezier(.4, 0, .2, 1) forwards; }
 .timeline::after {
-  /* glowing head riding on the tip of the line as it climbs */
-  content: ""; position: absolute; left: -5px; width: 11px; height: 11px; border-radius: 50%;
-  top: calc(10px + (1 - var(--p)) * (100% - 20px));
+  /* glowing head that rides the tip of the line while it climbs */
+  content: ""; position: absolute; left: -5px; top: calc(100% - 20px); width: 11px; height: 11px; border-radius: 50%;
   background: #fff; box-shadow: 0 0 0 4px rgba(0,113,227,.25), 0 0 24px 6px rgba(41,151,255,.55);
-  opacity: var(--head, 0); animation: none;
+  opacity: 0; animation: none;
 }
-.timeline__item { transition: opacity .5s ease; }
-.timeline__item:not(.is-lit) { opacity: .42; }
+.timeline.is-drawing::after { animation: tl-head var(--draw) cubic-bezier(.4, 0, .2, 1) forwards; }
+.timeline__item { opacity: 1; }
 .timeline__item::before {
-  background: var(--offwhite); border: 2px solid rgba(0,113,227,.35);
-  transform: scale(.6); opacity: .6;
-  transition: transform .45s cubic-bezier(.34, 1.56, .64, 1), opacity .4s, background .4s, box-shadow .4s, border-color .4s;
+  background: var(--offwhite); border: 2px solid rgba(0,113,227,.4);
+  transform: scale(.7); opacity: .8;
+  transition: transform .45s cubic-bezier(.34, 1.56, .64, 1), opacity .3s, background .3s, box-shadow .4s, border-color .3s;
 }
 .timeline__item.is-lit::before {
   transform: scale(1); opacity: 1; background: var(--blue-dark); border-color: var(--blue-dark);
   box-shadow: 0 0 0 6px rgba(0,113,227,.14);
 }
-.timeline__item time { transition: color .4s; color: rgba(0,113,227,.55); }
-.timeline__item.is-lit time { color: var(--blue-dark); }
+.timeline__item time { color: var(--blue-dark); }
+@keyframes tl-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes tl-head { 0% { top: calc(100% - 20px); opacity: 0; } 6% { opacity: 1; } 92% { opacity: 1; } 100% { top: 10px; opacity: 0; } }
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) {
-    /* keep the gentle slide-in on entry; opacity is handled by the lit state */
     .timeline__item { animation: row-slide linear both; animation-timeline: view(); animation-range: entry 0% entry 50%; }
   }
 }
 @keyframes row-slide { from { translate: -18px 0; } to { translate: 0 0; } }
 @media (prefers-reduced-motion: reduce) {
-  .timeline { --p: 1; }
+  .timeline::before, .timeline.is-drawing::before { transform: none; animation: none; }
+  .timeline::after { display: none; }
+  .timeline__item::before { transform: none; opacity: 1; background: var(--blue-dark); border-color: var(--blue-dark); }
+}
   .timeline::after { display: none; }
   .timeline__item, .timeline__item:not(.is-lit) { opacity: 1; }
   .timeline__item::before { transform: none; opacity: 1; background: var(--blue-dark); border-color: var(--blue-dark); }

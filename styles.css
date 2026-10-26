@@ -896,11 +896,11 @@ body:not(.has-intro) .hero__content { opacity: 1; }
 @media (max-width: 600px) { .section--dark { clip-path: inset(0 round 28px 28px 0 0); } }
 .section--dark::before, .section--dark::after {
   content: ""; position: fixed; z-index: -1; pointer-events: none;
-  width: 70vmax; height: 70vmax; border-radius: 50%;
-  filter: blur(80px); opacity: .32; mix-blend-mode: screen; will-change: transform;
+  width: 60vmax; height: 60vmax; border-radius: 50%;
+  opacity: .5; will-change: transform;
 }
-.section--dark::before { background: radial-gradient(circle, #1f6fff 0%, transparent 60%); top: -30vmax; left: -20vmax; animation: amb-a 30s ease-in-out infinite alternate; }
-.section--dark::after  { background: radial-gradient(circle, #8a5cff 0%, #ff5c8a 35%, transparent 62%); bottom: -35vmax; right: -25vmax; animation: amb-b 36s ease-in-out infinite alternate; }
+.section--dark::before { background: radial-gradient(circle, rgba(31,111,255,.55) 0%, rgba(31,111,255,.18) 30%, transparent 62%); top: -30vmax; left: -20vmax; animation: amb-a 30s ease-in-out infinite alternate; }
+.section--dark::after  { background: radial-gradient(circle, rgba(138,92,255,.5) 0%, rgba(255,92,138,.22) 32%, transparent 62%); bottom: -35vmax; right: -25vmax; animation: amb-b 36s ease-in-out infinite alternate; }
 @keyframes amb-a { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(18vw, 22vh, 0) scale(1.2); } }
 @keyframes amb-b { from { transform: translate3d(0,0,0) scale(1.1); } to { transform: translate3d(-16vw, -24vh, 0) scale(.9) rotate(30deg); } }
 
@@ -909,7 +909,7 @@ body:not(.has-intro) .hero__content { opacity: 1; }
   @media (prefers-reduced-motion: no-preference) {
     .section--dark::before { animation: amb-scroll-a linear both; animation-timeline: scroll(root); }
     .section--dark::after  { animation: amb-scroll-b linear both; animation-timeline: scroll(root); }
-    @keyframes amb-scroll-a { from { transform: translate3d(-10vw, -10vh, 0) scale(1); filter: blur(80px) hue-rotate(0deg); } to { transform: translate3d(28vw, 40vh, 0) scale(1.25); filter: blur(80px) hue-rotate(70deg); } }
+    @keyframes amb-scroll-a { from { transform: translate3d(-10vw, -10vh, 0) scale(1); } to { transform: translate3d(28vw, 40vh, 0) scale(1.25); } }
     @keyframes amb-scroll-b { from { transform: translate3d(10vw, 10vh, 0) scale(1.1) rotate(0deg); } to { transform: translate3d(-30vw, -45vh, 0) scale(.95) rotate(50deg); } }
 
     /* Section headers drift up as they enter. */

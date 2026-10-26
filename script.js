@@ -613,10 +613,22 @@
         const p = Math.max(0, Math.min(1, (tipY - lineTop) / lineLen));
         timeline.style.setProperty('--p', p.toFixed(4));
         timeline.style.setProperty('--head', p > 0.005 && p < 0.995 ? '1' : '0');
+        let latest = null;
         items.forEach(it => {
           const dotY = it.getBoundingClientRect().top + 14;          // centre of the dot
-          it.classList.toggle('is-lit', dotY <= tipY + 6);
+          const lit = dotY <= tipY + 6;
+          it.classList.toggle('is-lit', lit);
+          if (lit) latest = it;
         });
+        // big year watermark follows the newest entry the line has reached
+        const mark = $('#yearMark');
+        if (mark) {
+          const t = latest ? $('time', latest).textContent.trim().slice(0, 4) : '2020';
+          if (mark.textContent !== t) {
+            mark.classList.add('is-flipping');
+            requestAnimationFrame(() => { mark.textContent = t; requestAnimationFrame(() => mark.classList.remove('is-flipping')); });
+          }
+        }
       };
       const onScroll = () => { if (!active || ticking) return; ticking = true; requestAnimationFrame(paint); };
       new IntersectionObserver((es) => { active = es.some(e => e.isIntersecting); if (active) onScroll(); }, { rootMargin: '40% 0px 40% 0px' }).observe(timeline);

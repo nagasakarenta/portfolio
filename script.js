@@ -596,30 +596,33 @@
   })();
 
 
-  /* ---------- Timeline: once in view, draw the line from the oldest entry (bottom) up to now ---------- */
+  /* ---------- Timeline (oldest → newest): the line follows the scroll, drawn from the top down ---------- */
   const timeline = $('.timeline');
   if (timeline) {
     const items = $$('.timeline__item', timeline);
     if (reduceMotion) {
-      items.forEach(it => it.classList.add('is-lit'));
+      timeline.style.setProperty('--p', '1'); items.forEach(it => it.classList.add('is-lit'));
     } else {
-      const DRAW_MS = 1600;
-      const play = () => {
-        timeline.classList.add('is-drawing');
-        const rect = timeline.getBoundingClientRect();
-        const lineBottom = rect.top + rect.height - 10, lineLen = Math.max(1, rect.height - 20);
+      let ticking = false, active = false;
+      const paint = () => {
+        ticking = false;
+        const vh = window.innerHeight, r = timeline.getBoundingClientRect();
+        const lineTop = r.top + 10, lineLen = Math.max(1, r.height - 20);
+        // the tip of the line sits ~62% down the screen; the line is as long as what has scrolled past that point
+        const tipY = vh * 0.62;
+        const p = Math.max(0, Math.min(1, (tipY - lineTop) / lineLen));
+        timeline.style.setProperty('--p', p.toFixed(4));
+        timeline.style.setProperty('--head', p > 0.005 && p < 0.995 ? '1' : '0');
         items.forEach(it => {
-          const dotY = it.getBoundingClientRect().top + 14;            // centre of the dot
-          const f = Math.max(0, Math.min(1, (lineBottom - dotY) / lineLen));   // 0 = bottom (oldest) … 1 = top (newest)
-          // the CSS easing is ease-in-out-ish; approximate its inverse so dots light exactly when the tip passes them
-          const t = f < 0.5 ? Math.sqrt(f / 2) : 1 - Math.sqrt((1 - f) / 2);
-          setTimeout(() => it.classList.add('is-lit'), Math.round(t * DRAW_MS));
+          const dotY = it.getBoundingClientRect().top + 14;          // centre of the dot
+          it.classList.toggle('is-lit', dotY <= tipY + 6);
         });
       };
-      const tio = new IntersectionObserver((es) => {
-        if (es.some(e => e.isIntersecting)) { tio.disconnect(); play(); }
-      }, { threshold: 0.25 });
-      tio.observe(timeline);
+      const onScroll = () => { if (!active || ticking) return; ticking = true; requestAnimationFrame(paint); };
+      new IntersectionObserver((es) => { active = es.some(e => e.isIntersecting); if (active) onScroll(); }, { rootMargin: '40% 0px 40% 0px' }).observe(timeline);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      paint();
     }
   }
 

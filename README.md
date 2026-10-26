@@ -30,6 +30,16 @@ python3 -m http.server 5174
 仮の値は残っていません。リンク・メールはすべて実際のものです。
 Featured セクションのデバイス枠には IPA 試験トレーナーの公開ページを iframe で埋め込んでいます（`#featured` の `<iframe src>`）。
 
+## 問い合わせフォームを有効にする（Google Apps Script）
+
+「メッセージを送る」はページ内のフォームです。送信先として GAS のウェブアプリを使います。
+
+1. `tools/gas-contact-form.gs` の内容を https://script.google.com の新しいプロジェクトに貼り付ける
+2. デプロイ → 新しいデプロイ → ウェブアプリ（実行: 自分 / アクセス: 全員）→ URL をコピー
+3. `script.js` の `CONTACT_ENDPOINT = ''` にその URL を入れて push
+
+URL を入れるまでは、送信ボタンは入力内容を本文に入れた状態でメールアプリを開く動作になります。
+
 ## 公開する（GitHub Pages）
 
 1. GitHub で新しいリポジトリを作る（例: `portfolio`）

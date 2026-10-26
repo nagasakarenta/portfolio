@@ -472,24 +472,95 @@
   }
 
 
-  /* ---------- mailto fallback: also copy the address and confirm ---------- */
+  /* ---------- Toast ---------- */
   const toast = (msg) => {
     let el = $('#toast');
     if (!el) { el = document.createElement('div'); el.id = 'toast'; el.className = 'toast'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
     el.textContent = msg; el.classList.add('is-on');
-    clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('is-on'), 2600);
+    clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('is-on'), 3200);
   };
-  $$('a[href^="mailto:"]').forEach(a => {
-    a.addEventListener('click', () => {
-      const addr = a.getAttribute('href').replace(/^mailto:/, '').split('?')[0];
-      // Always tell the visitor the address; copy it too when the browser allows.
-      toast(`メールアプリを開いています。開かない場合は ${addr} 宛にお送りください。`);
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(addr).then(() => toast(`${addr} をコピーしました。メールアプリが開かない場合は貼り付けて送ってください。`)).catch(() => {});
-      }
-      // the mailto: navigation itself still proceeds
+
+  /* ---------- Contact form (in-page) ----------
+     Messages are POSTed as JSON to CONTACT_ENDPOINT — a Google Apps Script web app
+     (see tools/gas-contact-form.gs). While the endpoint is empty, "送信する" falls back
+     to opening the visitor's mail app with the message prefilled. */
+  const CONTACT_ENDPOINT = '';
+  const CONTACT_EMAIL = 'nagasakarenta@gmail.com';
+  const cform = $('#contactDialog');
+  if (cform && typeof cform.showModal === 'function') {
+    const form = $('#contactForm'), done = $('#cformDone'), errBox = $('#cformError'), submitBtn = $('#cformSubmit');
+    let openedAt = 0;
+    const openForm = (topic) => {
+      setOpen(false);
+      const pc = $('#profileCard'); if (pc && pc.open) pc.close();
+      form.hidden = false; done.hidden = true; errBox.hidden = true; submitBtn.disabled = false; submitBtn.textContent = '送信する';
+      if (topic) { const sel = form.elements.topic; [...sel.options].forEach(o => { if (o.text === topic) sel.value = o.text; }); }
+      openedAt = Date.now();
+      cform.showModal();
+      setTimeout(() => form.elements.name.focus(), 50);
+    };
+    $$('[data-contact]').forEach(el => el.addEventListener('click', (e) => { e.preventDefault(); openForm(el.dataset.topic); }));
+    $('#cformClose').addEventListener('click', () => cform.close());
+    $('#cformDoneClose').addEventListener('click', () => cform.close());
+    cform.addEventListener('click', (e) => { if (e.target === cform) cform.close(); });
+
+    const payload = () => ({
+      name: form.elements.name.value.trim(),
+      email: form.elements.email.value.trim(),
+      company: form.elements.company.value.trim(),
+      topic: form.elements.topic.value,
+      message: form.elements.message.value.trim(),
+      website: form.elements.website.value,          // honeypot
+      page: location.href,
+      ua: navigator.userAgent.slice(0, 200)
     });
-  });
+    const mailtoFor = (p) => {
+      const subject = `[Portfolio] ${p.topic} — ${p.name}`;
+      const body = `${p.message}\n\n—\nお名前: ${p.name}\n会社名・所属: ${p.company || '-'}\nメール: ${p.email}`;
+      return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    };
+    const showError = (msg) => { errBox.textContent = msg; errBox.hidden = false; };
+    const showDone = (p) => {
+      form.hidden = true; done.hidden = false;
+      $('#cformDoneName').textContent = p.name ? `${p.name} さん、` : '';
+      try { localStorage.setItem('contactSentAt', String(Date.now())); } catch (_) {}
+    };
+    // keep the "メールアプリで送る" link in sync with what was typed
+    form.addEventListener('input', () => { $('#cformMailto').href = mailtoFor(payload()); });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errBox.hidden = true;
+      if (!form.reportValidity()) return;
+      const p = payload();
+      if (p.website) { showDone(p); return; }                           // bot: pretend success
+      if (Date.now() - openedAt < 1500) { showError('入力内容を確認して、もう一度送信してください。'); return; }
+      if (!CONTACT_ENDPOINT) {
+        // Not wired to a backend yet: hand off to the mail app with everything prefilled.
+        window.location.href = mailtoFor(p);
+        toast(`メールアプリを開きました。開かない場合は ${CONTACT_EMAIL} 宛にお送りください。`);
+        return;
+      }
+      submitBtn.disabled = true; submitBtn.textContent = '送信中…';
+      try {
+        const ctrl = new AbortController(); const timer = setTimeout(() => ctrl.abort(), 15000);
+        const res = await fetch(CONTACT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },   // simple request: no CORS preflight for Apps Script
+          body: JSON.stringify(p),
+          signal: ctrl.signal
+        });
+        clearTimeout(timer);
+        let ok = res.ok;
+        try { const j = await res.json(); ok = ok && j && j.ok !== false; } catch (_) {}
+        if (!ok) throw new Error('bad response');
+        showDone(p);
+      } catch (err) {
+        submitBtn.disabled = false; submitBtn.textContent = '送信する';
+        showError('送信に失敗しました。通信環境をご確認のうえ再度お試しいただくか、「メールアプリで送る」からお送りください。');
+      }
+    });
+  }
 
   /* ---------- Active nav link while scrolling ---------- */
   const sections = $$('main section[id]');

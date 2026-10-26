@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://nagasakarenta.github.io; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://nagasakarenta.github.io; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Renta Nagasaka — Indie Developer &amp; Solopreneur</title>
   <meta name="description" content="長坂錬汰のポートフォリオ。個人事業主として iOS / Web アプリを企画・開発・販売（App Store 有料ランキング 18 位）。企業では Dify・n8n・GAS・ローカル LLM など最適な AI ツールを選び、業務 DX から AX（AI 導入）までを実装。大阪大学 基礎工学部 情報科学科。" />
@@ -23,7 +23,7 @@
   <meta name="theme-color" content="#000000" />
   <link rel="icon" href="assets/favicon-64.png" type="image/png" sizes="64x64" />
   <link rel="apple-touch-icon" href="assets/icon-180.png" />
-  <link rel="stylesheet" href="styles.css?v=11" />
+  <link rel="stylesheet" href="styles.css?v=12" />
 </head>
 <body class="has-intro">
 
@@ -327,7 +327,7 @@
               <h3>AI 導入・業務自動化</h3>
               <p class="service__pitch">毎日くり返している手作業を、AI と自動化で手放す。</p>
               <p class="service__proof">実績: 建設テック企業で GAS による業務 DX から AI 導入まで。業務委託先で Dify / n8n の AI ワークフロー構築。</p>
-              <a href="mailto:nagasakarenta@gmail.com?subject=AI%E5%B0%8E%E5%85%A5%E3%83%BB%E6%A5%AD%E5%8B%99%E8%87%AA%E5%8B%95%E5%8C%96%E3%81%AE%E7%9B%B8%E8%AB%87" class="link-arrow">この内容で相談する</a>
+              <a href="#contact" class="link-arrow" data-contact data-topic="AI 導入・業務自動化">この内容で相談する</a>
             </div>
             <div class="service__body">
               <h4>こんな相談に</h4>
@@ -356,7 +356,7 @@
               <h3>アプリ・Web 開発</h3>
               <p class="service__pitch">アイデアを、ストアに並ぶ製品まで一人で運ぶ。</p>
               <p class="service__proof">実績: 個人で iOS アプリ 6 本を公開、App Store 有料ランキング 18 位。英作文添削 AI、IPA 試験トレーナーなど。</p>
-              <a href="mailto:nagasakarenta@gmail.com?subject=%E3%82%A2%E3%83%97%E3%83%AA%E3%83%BBWeb%E9%96%8B%E7%99%BA%E3%81%AE%E7%9B%B8%E8%AB%87" class="link-arrow">この内容で相談する</a>
+              <a href="#contact" class="link-arrow" data-contact data-topic="アプリ・Web 開発">この内容で相談する</a>
             </div>
             <div class="service__body">
               <h4>こんな相談に</h4>
@@ -385,7 +385,7 @@
               <h3>動画制作・AI 動画生成</h3>
               <p class="service__pitch">200 本納品してきた編集力に、生成 AI のスピードを足す。</p>
               <p class="service__proof">実績: YouTube・企業広報向けに 4 年で 200 本以上を納品。CrowdWorks クライアント評価 4.7（51 件）。</p>
-              <a href="mailto:nagasakarenta@gmail.com?subject=%E5%8B%95%E7%94%BB%E5%88%B6%E4%BD%9C%E3%83%BBAI%E5%8B%95%E7%94%BB%E7%94%9F%E6%88%90%E3%81%AE%E7%9B%B8%E8%AB%87" class="link-arrow">この内容で相談する</a>
+              <a href="#contact" class="link-arrow" data-contact data-topic="動画制作・AI 動画生成">この内容で相談する</a>
             </div>
             <div class="service__body">
               <h4>こんな相談に</h4>
@@ -410,7 +410,7 @@
 
         </div>
         <div class="featured__links reveal">
-          <a href="mailto:nagasakarenta@gmail.com" class="link-arrow">相談してみる</a>
+          <a href="#contact" class="link-arrow" data-contact>相談してみる</a>
         </div>
       </div>
     </section>
@@ -486,7 +486,7 @@
           <span class="ph">「作って売る」まで</span><span class="ph">一人でやってきた力を、</span><span class="ph">御社でも。</span>
         </p>
         <div class="contact__actions reveal" style="--d:.2s">
-          <a href="mailto:nagasakarenta@gmail.com" class="btn btn--primary">メールを送る</a>
+          <button type="button" class="btn btn--primary" data-contact>メッセージを送る</button>
           <a href="https://www.wantedly.com/id/renta_n" class="btn btn--ghost" target="_blank" rel="noopener">Wantedly で見る</a>
         </div>
         <ul class="socials reveal" style="--d:.3s">
@@ -534,7 +534,7 @@
         <li><a href="https://crowdworks.jp/public/employees/4082922" target="_blank" rel="noopener">CrowdWorks</a></li>
       </ul>
       <div class="pcard__actions">
-        <a href="mailto:nagasakarenta@gmail.com" class="btn btn--primary">nagasakarenta@gmail.com</a>
+        <button type="button" class="btn btn--primary" data-contact>メッセージを送る</button>
         <button type="button" class="btn btn--ghost" id="vcardBtn">連絡先を保存 (.vcf)</button>
       </div>
     </div>
@@ -577,6 +577,68 @@
     </button>
   </dialog>
 
-  <script src="script.js?v=9" defer></script>
+  <!-- ====== Contact form (in-page) ====== -->
+  <dialog class="cform" id="contactDialog" aria-labelledby="cformTitle">
+    <div class="cform__inner">
+      <button type="button" class="pcard__close" id="cformClose" aria-label="閉じる">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+      </button>
+      <form id="contactForm" novalidate>
+        <p class="cform__eyebrow">Contact</p>
+        <h2 class="cform__title" id="cformTitle">メッセージを送る</h2>
+        <p class="cform__lead">この画面から直接届きます。通常 1〜2 日以内に返信します。</p>
+
+        <div class="cform__grid">
+          <label class="field">
+            <span>お名前 <em>必須</em></span>
+            <input type="text" name="name" autocomplete="name" required maxlength="100" placeholder="山田 太郎" />
+          </label>
+          <label class="field">
+            <span>メールアドレス <em>必須</em></span>
+            <input type="email" name="email" autocomplete="email" required maxlength="200" placeholder="you@example.com" inputmode="email" />
+          </label>
+          <label class="field">
+            <span>会社名・所属</span>
+            <input type="text" name="company" autocomplete="organization" maxlength="120" placeholder="任意" />
+          </label>
+          <label class="field">
+            <span>ご相談の種類</span>
+            <select name="topic">
+              <option>AI 導入・業務自動化</option>
+              <option>アプリ・Web 開発</option>
+              <option>動画制作・AI 動画生成</option>
+              <option>業務委託・採用のご相談</option>
+              <option>その他</option>
+            </select>
+          </label>
+          <label class="field field--full">
+            <span>メッセージ <em>必須</em></span>
+            <textarea name="message" rows="6" required maxlength="5000" placeholder="背景、やりたいこと、時期、予算感など。分かる範囲で構いません。"></textarea>
+          </label>
+          <!-- honeypot: bots fill this, people never see it -->
+          <label class="cform__hp" aria-hidden="true"><span>Website</span><input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+        </div>
+
+        <p class="cform__error" id="cformError" role="alert" hidden></p>
+
+        <div class="cform__actions">
+          <button type="submit" class="btn btn--primary" id="cformSubmit">送信する</button>
+          <a href="mailto:nagasakarenta@gmail.com" class="link-arrow cform__alt" id="cformMailto">メールアプリで送る</a>
+        </div>
+        <p class="cform__note">送信内容は nagasakarenta@gmail.com にだけ届きます。</p>
+      </form>
+
+      <div class="cform__done" id="cformDone" hidden>
+        <div class="cform__check" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h2 class="cform__title">送信しました。</h2>
+        <p class="cform__lead">ありがとうございます。<span id="cformDoneName"></span>通常 1〜2 日以内にご連絡します。</p>
+        <button type="button" class="btn btn--ghost" id="cformDoneClose">閉じる</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="script.js?v=10" defer></script>
 </body>
 </html>

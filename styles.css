@@ -1019,3 +1019,42 @@ main, .ticker, .footer { position: relative; z-index: 1; }
   background: rgba(29,29,31,.92); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 20px 50px -20px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.08);
   transition: opacity .3s, transform .4s var(--ease); }
 .toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+
+/* ==========================================================
+   Contact form dialog
+   ========================================================== */
+.cform { border: 0; padding: 0; background: transparent; color: var(--offwhite); width: min(640px, calc(100vw - 32px)); max-height: calc(100vh - 32px); margin: auto; }
+.cform::backdrop { background: rgba(0,0,0,.6); -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%); }
+.cform__inner { position: relative; background: linear-gradient(160deg, #202024 0%, #141416 60%, #0d0d0f 100%); border-radius: 28px; padding: 34px 32px 28px; box-shadow: 0 40px 100px -30px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.08) inset; max-height: calc(100vh - 32px); overflow: auto; }
+.cform[open] .cform__inner { animation: pcard-in .55s var(--ease) both; }
+.cform__eyebrow { font-size: 13px; font-weight: 600; color: var(--blue); margin-bottom: 6px; }
+.cform__title { font-size: clamp(26px, 3vw, 32px); font-weight: 700; letter-spacing: -.025em; line-height: 1.1; margin-bottom: 8px; }
+.cform__lead { font-size: 15px; color: var(--gray-2); line-height: 1.5; margin-bottom: 22px; }
+.cform__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.field { display: grid; gap: 6px; }
+.field--full { grid-column: 1 / -1; }
+.field > span { font-size: 13px; font-weight: 600; color: var(--gray-2); }
+.field em { font-style: normal; font-size: 11px; color: var(--blue); margin-left: 6px; }
+.field input, .field select, .field textarea {
+  font: inherit; font-size: 15px; color: #fff; width: 100%;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 12px;
+  padding: 12px 14px; transition: border-color .2s, background .2s, box-shadow .2s; -webkit-appearance: none; appearance: none;
+}
+.field select { background-image: linear-gradient(45deg, transparent 50%, #a1a1a6 50%), linear-gradient(135deg, #a1a1a6 50%, transparent 50%); background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 40px; }
+.field select option { color: #000; }
+.field textarea { resize: vertical; min-height: 140px; line-height: 1.55; }
+.field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,.3); }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--blue); background: rgba(255,255,255,.08); box-shadow: 0 0 0 4px rgba(41,151,255,.18); }
+.field input:user-invalid, .field textarea:user-invalid { border-color: #ff6b6b; }
+.cform__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.cform__error { margin: 14px 0 0; padding: 10px 14px; border-radius: 12px; background: rgba(255,107,107,.12); color: #ff8a8a; font-size: 14px; line-height: 1.5; }
+.cform__actions { display: flex; align-items: center; gap: 22px; margin-top: 20px; flex-wrap: wrap; }
+.cform__actions .btn { min-width: 150px; }
+.cform__actions .btn[disabled] { opacity: .6; cursor: progress; }
+.cform__alt { font-size: 15px; }
+.cform__note { font-size: 12px; color: var(--gray); margin-top: 14px; }
+.cform__done { text-align: center; padding: 20px 0 8px; animation: pcard-in .5s var(--ease) both; }
+.cform__check { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 18px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #0071e3, #8a5cff); box-shadow: 0 20px 50px -20px rgba(41,151,255,.8); }
+.cform__done .cform__lead { margin-bottom: 22px; }
+@media (max-width: 600px) { .cform__inner { padding: 26px 20px 22px; border-radius: 22px; } .cform__grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .cform[open] .cform__inner, .cform__done { animation: none; } }

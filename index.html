@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://nagasakarenta.github.io; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>Renta Nagasaka — Indie Developer &amp; Solopreneur</title>
+  <meta name="description" content="長坂錬汰のポートフォリオ。個人事業主（ソロプレナー）として iOS / Web アプリを企画・開発・販売。App Store 有料ランキング 18 位。大阪大学 基礎工学部 情報科学科 計算機科学コース。" />
+  <meta property="og:title" content="Renta Nagasaka — Indie Developer &amp; Solopreneur" />
+  <meta property="og:description" content="個人事業主として iOS / Web / LLM アプリを一人で企画・開発・販売。大阪大学 情報科学科。" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="assets/favicon-64.png" type="image/png" sizes="64x64" />
+  <link rel="apple-touch-icon" href="assets/icon-180.png" />
+  <link rel="stylesheet" href="styles.css?v=4" />
+</head>
+<body class="has-intro">
+
+  <!-- ====== Intro / loading motion ====== -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro__bg">
+      <span class="blob blob--1"></span>
+      <span class="blob blob--2"></span>
+    </div>
+    <div class="intro__center">
+      <svg class="intro__mark" viewBox="0 0 220 120" fill="none" aria-hidden="true">
+        <!-- R -->
+        <path class="intro__stroke intro__stroke--1" d="M24 104V16h38a24 24 0 0 1 0 48H24" stroke="url(#introGrad)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+        <path class="intro__stroke intro__stroke--2" d="M56 64l34 40" stroke="url(#introGrad)" stroke-width="9" stroke-linecap="round"/>
+        <!-- N -->
+        <path class="intro__stroke intro__stroke--3" d="M122 104V16l72 88V16" stroke="url(#introGrad)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs>
+          <linearGradient id="introGrad" x1="0" y1="0" x2="220" y2="120" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#6ec1ff"/><stop offset=".5" stop-color="#a98bff"/><stop offset="1" stop-color="#ff8fb1"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <p class="intro__name">Renta Nagasaka</p>
+      <p class="intro__sub">Indie Developer · AI &amp; DX</p>
+    </div>
+    <div class="intro__bar"><span></span></div>
+    <p class="intro__skip">クリックでスキップ</p>
+  </div>
+
+
+  <!-- ====== Global Nav ====== -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <button type="button" class="nav__brand" id="brandBtn" aria-haspopup="dialog" aria-controls="profileCard" title="プロフィールカードを開く">
+        <img class="nav__avatar" src="assets/avatar.jpg" alt="" width="22" height="22" />
+        <span>Renta Nagasaka</span>
+      </button>
+      <nav class="nav__links" id="navLinks">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#featured">Featured</a>
+        <a href="#projects">Projects</a>
+        <a href="#services">Services</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact" class="nav__cta">Contact</a>
+      </nav>
+      <button class="nav__toggle" id="navToggle" aria-label="メニュー" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ====== Hero ====== -->
+    <section class="hero" id="hero">
+      <div class="hero__bg" aria-hidden="true">
+        <span class="blob blob--1"></span>
+        <span class="blob blob--2"></span>
+        <span class="blob blob--3"></span>
+      </div>
+      <div class="hero__content" id="heroContent">
+        <img class="hero__avatar reveal" src="assets/avatar.jpg" alt="長坂 錬汰" width="96" height="96" />
+        <p class="hero__eyebrow reveal" style="--d:.05s">Indie Developer · AI &amp; DX Consultant · 大阪大学 情報科学科</p>
+        <h1 class="hero__title reveal" style="--d:.1s">
+          Hello.<br />
+          <span class="gradient-text typewriter" id="typewriter"
+                data-phrases='["I build products solo.","I bring AI into real work.","From idea to App Store.","I ship, sell, and iterate."]'
+                aria-label="I build products solo. I bring AI into real work. From idea to App Store. I ship, sell, and iterate.">
+            <span class="typewriter__text" aria-hidden="true"></span><span class="typewriter__caret" aria-hidden="true"></span>
+          </span>
+        </h1>
+        <p class="hero__sub reveal" style="--d:.2s">
+          <span class="ph">長坂 錬汰。</span><span class="ph">個人事業主として&nbsp;</span><span class="ph">iOS / Web アプリを企画・開発・販売し、</span><br class="br-desktop" />
+          <span class="ph">企業の現場では&nbsp;</span><span class="ph">Dify · n8n · GAS で</span><span class="ph">業務 DX から AI 導入までを実装。</span><span class="ph">大阪大学 情報科学科 3 年。</span>
+        </p>
+        <div class="hero__actions reveal" style="--d:.3s">
+          <a href="#projects" class="link-arrow">プロジェクトを見る</a>
+          <a href="https://github.com/nagasakarenta" class="link-arrow" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+      <div class="hero__scroll" aria-hidden="true">
+        <span></span>
+      </div>
+    </section>
+
+    <!-- ====== Ticker ====== -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track">
+        <span>TypeScript</span><span>Swift</span><span>React Native</span><span>Dify</span><span>n8n</span><span>Ollama</span><span>Next.js</span><span>React</span><span>Python</span><span>FastAPI</span><span>SQL</span><span>Google Apps Script</span><span>GitHub Actions</span><span>LLM API</span><span>App Store</span><span>After Effects</span>
+        <span>TypeScript</span><span>Swift</span><span>React Native</span><span>Dify</span><span>n8n</span><span>Ollama</span><span>Next.js</span><span>React</span><span>Python</span><span>FastAPI</span><span>SQL</span><span>Google Apps Script</span><span>GitHub Actions</span><span>LLM API</span><span>App Store</span><span>After Effects</span>
+      </div>
+    </div>
+
+    <!-- ====== About (statement) ====== -->
+    <section class="section section--light" id="about">
+      <div class="container container--narrow">
+        <div class="statement reveal">
+          <p class="statement__lead">作って、出して、売る。</p>
+          <p>個人事業主として、iOS アプリを企画・実装から App 内課金、ストア申請、プロモ動画、価格検証まで一人で回し、<strong>App Store 有料ランキング <span class="nowrap">18 位</span></strong>に届きました。</p>
+          <p>企業の現場では、<strong>GAS による業務 DX から Dify · n8n · ローカル LLM を使った AI 導入まで</strong>を自分の手で実装。CS エンジニアから新規事業開発まで経験し、「使われる AI」を事業の課題から設計しています。</p>
+          <p>大学では計算機科学を専攻。<strong><span class="nowrap">2026 年 10 月</span>に IT パスポートと基本情報技術者に合格。</strong></p>
+        </div>
+        <div class="stats reveal" style="--d:.1s">
+          <div class="stat">
+            <span class="stat__num" data-count="18">0</span><span class="stat__suffix">位</span>
+            <span class="stat__label">App Store 有料ランキング 最高順位</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num" data-count="16">0</span><span class="stat__suffix">日</span>
+            <span class="stat__label">基本情報技術者 学習開始から合格まで</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num" data-count="434">0</span><span class="stat__suffix">問</span>
+            <span class="stat__label">自作した基本情報のオリジナル問題</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num" data-count="4.7" data-decimals="1">0</span><span class="stat__suffix">★</span>
+            <span class="stat__label">CrowdWorks 評価（51 件・納品 200 本以上）</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== Skills (bento) ====== -->
+    <section class="section section--dark" id="skills">
+      <div class="container">
+        <header class="section__head reveal">
+          <h2 class="section__title split">Skills.</h2>
+          <p class="section__lead">基礎を深く、道具は広く。</p>
+        </header>
+
+        <div class="bento">
+          <article class="card card--wide reveal tilt">
+            <p class="card__eyebrow">Languages</p>
+            <h3 class="card__title">TypeScript / Swift / Python / SQL</h3>
+            <p class="card__text">Web は TypeScript、iOS は Swift と React Native、データ処理と API は Python。業務では SQL と Google Apps Script で自動化も。</p>
+            <ul class="chips">
+              <li>TypeScript</li><li>Swift</li><li>React Native</li><li>Python</li><li>SQL</li><li>Google Apps Script</li>
+            </ul>
+          </article>
+
+          <article class="card reveal tilt" style="--d:.05s">
+            <p class="card__eyebrow">Web</p>
+            <h3 class="card__title">Next.js · React</h3>
+            <p class="card__text">設計から GitHub Actions での CI / デプロイまで一人で完結。モーションと操作性にこだわります。</p>
+          </article>
+
+          <article class="card reveal tilt" style="--d:.1s">
+            <p class="card__eyebrow">iOS</p>
+            <h3 class="card__title">App Store 公開</h3>
+            <p class="card__text">Swift / React Native で企画、実装、App 内課金、審査対応、プロモ動画まで。これまでに 6 本の iOS アプリを開発。</p>
+          </article>
+
+          <article class="card card--accent reveal tilt" style="--d:.15s">
+            <p class="card__eyebrow">AI × DX</p>
+            <h3 class="card__title">Dify · n8n · ローカル LLM で AI を業務に</h3>
+            <p class="card__text">企業の現場で、GAS による業務自動化から Dify / n8n を使った AI ワークフロー導入までを実装。機密データを外に出せない用途には、Ollama / llama.cpp で Gemma・Llama・Qwen をローカル運用（大学のゼミで構築、個人でも常用）。OpenAI / Claude API を使ったアプリ開発と評価の仕組みづくりも。</p>
+            <ul class="chips">
+              <li>Dify</li><li>n8n</li><li>Google Apps Script</li><li>Ollama</li><li>llama.cpp</li><li>OpenAI API</li><li>Claude API</li><li>RAG</li>
+            </ul>
+          </article>
+
+          <article class="card card--wide card--glow reveal tilt" style="--d:.2s">
+            <p class="card__eyebrow">Computer Science · Certifications</p>
+            <h3 class="card__title">計算機科学コース ＋ IT パスポート / 基本情報技術者</h3>
+            <p class="card__text">大阪大学 基礎工学部 情報科学科 計算機科学コース。2026 年 10 月、IT パスポートと基本情報技術者試験に合格。「なぜ速いのか」を説明できるエンジニアを目指しています。</p>
+            <ul class="chips">
+              <li>Algorithms</li><li>Operating Systems</li><li>Networks</li><li>Databases</li><li>Security</li><li>ITパスポート</li><li>基本情報技術者</li>
+            </ul>
+          </article>
+
+          <article class="card reveal tilt" style="--d:.25s">
+            <p class="card__eyebrow">Creative</p>
+            <h3 class="card__title">動画編集</h3>
+            <p class="card__text">Premiere Pro · After Effects · Canva。フリーランスとして 4 年で 200 本以上を納品。プロダクトの「見せ方」まで作れます。</p>
+            <div class="rating">
+              <span class="rating__score">4.7</span>
+              <span class="rating__stars" aria-hidden="true">★★★★★</span>
+              <span class="rating__meta">CrowdWorks 評価 · 51 件</span>
+            </div>
+            <blockquote class="card__quote">「素早く真摯にご対応いただきました。引き続きどうぞよろしくお願いいたします。」<cite>— クライアント評価より</cite></blockquote>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== Featured project (sticky scroll) ====== -->
+    <section class="section section--light featured" id="featured">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__eyebrow">Featured Project</p>
+          <h2 class="section__title split">IPA 試験トレーナー.</h2>
+          <p class="section__lead"><span class="ph">IT パスポート・基本情報技術者のための</span><span class="ph">学習 Web アプリ。</span><br class="br-desktop" /><span class="ph">「解く → 間違いを復習 → 模試で確かめる」を&nbsp;</span><span class="ph">1 画面で。</span></p>
+        </header>
+      </div>
+
+      <div class="featured__stage">
+        <div class="device">
+          <div class="device__bar">
+            <span></span><span></span><span></span>
+            <p>nagasakarenta.github.io/ipa-exam-trainer</p>
+          </div>
+          <div class="device__screen device__screen--live">
+            <iframe src="https://nagasakarenta.github.io/ipa-exam-trainer/" title="IPA 試験トレーナー ライブデモ" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </div>
+        <p class="featured__hint">↑ 実際に動くアプリです。触ってみてください。</p>
+      </div>
+
+      <div class="container">
+        <div class="features">
+          <div class="feature reveal">
+            <h3>課題</h3>
+            <p>自分が 16 日で基本情報に合格するために作っていた実力テストと復習ノートを、誰でも使える形に設計し直す。</p>
+          </div>
+          <div class="feature reveal" style="--d:.1s">
+            <h3>解決</h3>
+            <p>分野別ドリル、SM-2 を単純化した間隔反復、本試験と同じ配分・制限時間の模試と合否判定、弱点分析。サーバ不要でデータはブラウザ内に。</p>
+          </div>
+          <div class="feature reveal" style="--d:.2s">
+            <h3>技術</h3>
+            <p>TypeScript。GitHub Actions で CI と GitHub Pages への自動デプロイ。自作した 434 問 ＋ 84 問のオリジナル問題をスクリプトで変換して収録。</p>
+          </div>
+        </div>
+        <div class="featured__links reveal">
+          <a href="https://github.com/nagasakarenta/ipa-exam-trainer" class="link-arrow" target="_blank" rel="noopener">ソースコード</a>
+          <a href="https://nagasakarenta.github.io/ipa-exam-trainer/" class="link-arrow" target="_blank" rel="noopener">デモを開く</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== Projects (snap carousel) ====== -->
+    <section class="section section--dark" id="projects">
+      <div class="container">
+        <header class="section__head section__head--row reveal">
+          <div>
+            <h2 class="section__title split">Projects.</h2>
+            <p class="section__lead">作って、公開したもの。</p>
+          </div>
+          <div class="carousel__nav">
+            <button class="round-btn" id="prevBtn" aria-label="前へ">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="round-btn" id="nextBtn" aria-label="次へ">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </header>
+      </div>
+
+      <div class="carousel" id="carousel">
+        <a class="tile tile--blue tilt" href="#gallery-english" data-gallery="english">
+          <img class="tile__icon" src="assets/app-english-icon.png" alt="" width="56" height="56" />
+          <p class="tile__eyebrow">iOS App · 2025.06 — 2026.02</p>
+          <h3 class="tile__title">英作文添削 AI</h3>
+          <p class="tile__text">大学受験生向け。GPT が文法・語彙・論理構成を採点し、大学別の採点基準で講評。手書き答案の OCR にも対応。LINE Bot から始め、Swift 製 iOS アプリ v2.2 まで一人で育てた。</p>
+          <ul class="tile__tags"><li>Swift</li><li>Firebase</li><li>OpenAI API</li><li>OCR</li></ul>
+          <span class="tile__plus">+</span>
+        </a>
+        <a class="tile tile--purple tilt" href="https://github.com/nagasakarenta/sharegate" target="_blank" rel="noopener">
+          <p class="tile__eyebrow">Hackathon · 2026.10</p>
+          <h3 class="tile__title">ShareGate</h3>
+          <p class="tile__text">AI チャットをチームの知識に。Nemotron 3 が各チャットを「共有 / マスクして共有 / 非公開」に判定し、本人の文体で文書化。Nebius × NVIDIA Global AI Hackathon に出展。</p>
+          <ul class="tile__tags"><li>Python</li><li>FastAPI</li><li>Nemotron 3</li></ul>
+          <span class="tile__plus">+</span>
+        </a>
+        <a class="tile tile--green tilt" href="https://nagasakarenta.github.io/ipa-exam-trainer/" target="_blank" rel="noopener">
+          <p class="tile__eyebrow">Web App · 2026.10</p>
+          <h3 class="tile__title">IPA 試験トレーナー</h3>
+          <p class="tile__text">IT パスポート・基本情報技術者の学習アプリ。分野別ドリル、間隔反復、模擬試験、弱点分析。オリジナル問題 518 問を収録。</p>
+          <ul class="tile__tags"><li>TypeScript</li><li>GitHub Actions</li><li>GitHub Pages</li></ul>
+          <span class="tile__plus">+</span>
+        </a>
+        <a class="tile tile--orange tilt" href="#gallery-stylemagic" data-gallery="stylemagic">
+          <img class="tile__icon" src="assets/stylemagic/icon.png" alt="" width="56" height="56" />
+          <p class="tile__eyebrow">iOS App · 2025.06 — · 有料ランキング 18 位</p>
+          <h3 class="tile__title">スタイルマジック</h3>
+          <p class="tile__text">写真をアニメ・水彩・スケッチなど 11 種類の画風に変換する AI アプリ。Swift で UI、画像生成 API を Vercel 経由で呼び出し、Cloudinary で配信。広告・課金・審査対応まで一人で回し、App Store 有料ランキング 18 位に。</p>
+          <ul class="tile__tags"><li>Swift</li><li>Firebase</li><li>AdMob</li><li>Cloudinary</li></ul>
+          <span class="tile__plus">+</span>
+        </a>
+        <a class="tile tile--mono tilt" href="https://github.com/nagasakarenta" target="_blank" rel="noopener">
+          <p class="tile__eyebrow">And more</p>
+          <h3 class="tile__title">GitHub で<br />すべて見る</h3>
+          <p class="tile__text">LeetCode の記録から大学の課題まで。</p>
+          <span class="tile__plus">›</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ====== Services ====== -->
+    <section class="section section--light services" id="services">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__eyebrow">Work with me</p>
+          <h2 class="section__title split">Services.</h2>
+          <p class="section__lead">個人事業主として、こんなご相談を受けています。</p>
+        </header>
+        <div class="services__grid">
+          <article class="service reveal tilt">
+            <span class="service__num">01</span>
+            <h3>AI 導入・業務自動化</h3>
+            <p>Dify / n8n / Google Apps Script で、問い合わせ対応・資料作成・データ集計などの業務を自動化。現場ヒアリングから PoC、運用定着まで。社外に出せないデータには、ローカル LLM（Ollama / llama.cpp）での構築にも対応します。</p>
+            <ul class="chips chips--light"><li>Dify</li><li>n8n</li><li>GAS</li><li>Local LLM</li><li>LLM API</li></ul>
+          </article>
+          <article class="service reveal tilt" style="--d:.08s">
+            <span class="service__num">02</span>
+            <h3>アプリ・Web 開発</h3>
+            <p>iOS アプリ（Swift / React Native）と Web アプリ（Next.js）を、企画から公開・計測まで。App Store 申請や課金設計を含めて一人で完結できます。</p>
+            <ul class="chips chips--light"><li>Swift</li><li>Next.js</li><li>Firebase</li><li>App Store</li></ul>
+          </article>
+          <article class="service reveal tilt" style="--d:.16s">
+            <span class="service__num">03</span>
+            <h3>動画制作・プロダクト PR</h3>
+            <p>YouTube・企業広報で 200 本以上の納品実績。アプリのプロモ動画やサービス紹介動画を、企画から編集まで。</p>
+            <ul class="chips chips--light"><li>Premiere Pro</li><li>After Effects</li><li>Canva</li></ul>
+          </article>
+        </div>
+        <div class="featured__links reveal">
+          <a href="mailto:nagasakarenta@gmail.com" class="link-arrow">相談してみる</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== Experience ====== -->
+    <section class="section section--light" id="experience">
+      <div class="container container--narrow">
+        <header class="section__head reveal">
+          <h2 class="section__title split">Experience.</h2>
+          <p class="section__lead">学びと実践の記録。</p>
+        </header>
+
+        <ol class="timeline">
+          <li class="timeline__item reveal">
+            <time>2026.10</time>
+            <div>
+              <h3>IT パスポート・基本情報技術者試験 合格</h3>
+              <p>2 週間強で連続受験し、どちらも合格。その学習プロセスを「IPA 試験トレーナー」として公開。</p>
+            </div>
+          </li>
+          <li class="timeline__item reveal" style="--d:.05s">
+            <time>2025.10 — 2026.03</time>
+            <div>
+              <h3>KB Connect — 業務委託インターン</h3>
+              <p>Dify と n8n を使った AI ワークフローの構築と、クライアント企業の業務自動化・AI 導入を支援。要件整理から実装、運用まで。</p>
+            </div>
+          </li>
+          <li class="timeline__item reveal" style="--d:.1s">
+            <time>2025.02 — 現在</time>
+            <div>
+              <h3>クラフトバンク株式会社 — インターン</h3>
+              <p>建設テック企業で長期インターン。カスタマーサクセスエンジニアとして、Google Apps Script による業務 DX から AI 導入までを現場に実装。その後は新規事業開発まで担当。</p>
+            </div>
+          </li>
+          <li class="timeline__item reveal" style="--d:.15s">
+            <time>2025.05 — 2025.11</time>
+            <div>
+              <h3>iOS アプリを個人開発・公開</h3>
+              <p>英作文添削 AI アプリ（Swift ＋ Firebase）をはじめ複数本を App Store に公開。11 月に有料ランキング 18 位。</p>
+            </div>
+          </li>
+          <li class="timeline__item reveal" style="--d:.2s">
+            <time>2024.10 — 2025.02</time>
+            <div>
+              <h3>株式会社グランネット — マーケティング部 インターン</h3>
+              <p>動画コンテンツの企画・制作、インサイドセールス。</p>
+            </div>
+          </li>
+          <li class="timeline__item reveal" style="--d:.25s">
+            <time>2024.04 — 2028.03</time>
+            <div>
+              <h3>大阪大学 基礎工学部 情報科学科 計算機科学コース</h3>
+              <p>アルゴリズム、オペレーティングシステム、計算機アーキテクチャ、ネットワーク、データベース。2024 年 4 月入学、2028 年 3 月卒業見込み。</p>
+            </div>
+          </li>
+          <li class="timeline__item reveal" style="--d:.3s">
+            <time>2020.12 — 現在</time>
+            <div>
+              <h3>フリーランス 動画編集（CrowdWorks）</h3>
+              <p>高校在学中に個人で受注を開始。YouTube や企業広報の動画を 4 年で 200 本以上納品。評価 4.7 / 5.0（51 件）、プロジェクト完了率 92%。「一人で受けて、納めて、信頼を積む」の原点。</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ====== Contact ====== -->
+    <section class="section section--dark contact" id="contact">
+      <div class="container container--narrow">
+        <h2 class="contact__title reveal">一緒に、<br /><span class="gradient-text"><span class="ph">良いものを</span><span class="ph">作りましょう。</span></span></h2>
+        <p class="contact__lead reveal" style="--d:.1s">
+          <span class="ph">AI 導入・業務自動化のご相談から、</span><span class="ph">SWE / SE の長期インターン・</span><span class="ph">業務委託まで。</span><br />
+          <span class="ph">「作って売る」まで</span><span class="ph">一人でやってきた力を、</span><span class="ph">御社でも。</span>
+        </p>
+        <div class="contact__actions reveal" style="--d:.2s">
+          <a href="mailto:nagasakarenta@gmail.com" class="btn btn--primary">メールを送る</a>
+          <a href="https://www.wantedly.com/id/renta_n" class="btn btn--ghost" target="_blank" rel="noopener">Wantedly で見る</a>
+        </div>
+        <ul class="socials reveal" style="--d:.3s">
+          <li><a href="https://github.com/nagasakarenta" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://www.wantedly.com/id/renta_n" target="_blank" rel="noopener">Wantedly</a></li>
+          <li><a href="https://www.linkedin.com/in/rentanagasaka/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://crowdworks.jp/public/employees/4082922" target="_blank" rel="noopener">CrowdWorks</a></li>
+          <li><a href="mailto:nagasakarenta@gmail.com">nagasakarenta@gmail.com</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Designed &amp; built by Renta Nagasaka. No frameworks, just HTML/CSS/JS.</p>
+      <p>© 2026 Renta Nagasaka</p>
+    </div>
+  </footer>
+
+  <!-- ====== Profile card (opened from the nav brand) ====== -->
+  <dialog class="pcard" id="profileCard" aria-labelledby="pcardName">
+    <div class="pcard__inner">
+      <button type="button" class="pcard__close" id="pcardClose" aria-label="閉じる">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+      </button>
+      <div class="pcard__head">
+        <img class="pcard__avatar" src="assets/avatar.jpg" alt="" width="88" height="88" />
+        <div>
+          <p class="pcard__name" id="pcardName">長坂 錬汰</p>
+          <p class="pcard__romaji">Renta Nagasaka</p>
+          <p class="pcard__role">Indie Developer · AI &amp; DX Consultant</p>
+        </div>
+      </div>
+      <dl class="pcard__meta">
+        <div><dt>所属</dt><dd>大阪大学 基礎工学部 情報科学科 計算機科学コース（2028 年 3 月卒業見込み）</dd></div>
+        <div><dt>拠点</dt><dd>大阪</dd></div>
+        <div><dt>できること</dt><dd>AI 導入・業務自動化（Dify / n8n / GAS / ローカル LLM）、iOS・Web 開発、動画制作</dd></div>
+        <div><dt>資格</dt><dd>IT パスポート、基本情報技術者（2026）</dd></div>
+      </dl>
+      <ul class="pcard__links">
+        <li><a href="https://github.com/nagasakarenta" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://www.wantedly.com/id/renta_n" target="_blank" rel="noopener">Wantedly</a></li>
+        <li><a href="https://www.linkedin.com/in/rentanagasaka/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://crowdworks.jp/public/employees/4082922" target="_blank" rel="noopener">CrowdWorks</a></li>
+      </ul>
+      <div class="pcard__actions">
+        <a href="mailto:nagasakarenta@gmail.com" class="btn btn--primary">nagasakarenta@gmail.com</a>
+        <button type="button" class="btn btn--ghost" id="vcardBtn">連絡先を保存 (.vcf)</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ====== Project gallery (opened from project tiles) ====== -->
+  <dialog class="gallery" id="galleryDialog" aria-labelledby="galleryTitle">
+    <div class="gallery__inner">
+      <button type="button" class="pcard__close gallery__close" id="galleryClose" aria-label="閉じる">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+      </button>
+      <div class="gallery__head">
+        <img class="gallery__icon" id="galleryIcon" src="" alt="" width="64" height="64" />
+        <div>
+          <p class="gallery__eyebrow" id="galleryEyebrow"></p>
+          <h2 class="gallery__title" id="galleryTitle"></h2>
+        </div>
+      </div>
+      <p class="gallery__desc" id="galleryDesc"></p>
+      <ul class="gallery__facts" id="galleryFacts"></ul>
+      <div class="gallery__grid" id="galleryGrid"></div>
+      <p class="gallery__note" id="galleryNote"></p>
+    </div>
+  </dialog>
+
+  <script src="script.js?v=4" defer></script>
+</body>
+</html>

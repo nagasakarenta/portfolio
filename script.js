@@ -571,6 +571,30 @@
     });
   }
 
+
+  /* ---------- Freeze the page while any dialog is open (prevents sideways panning behind it) ---------- */
+  (() => {
+    const dialogs = $$('dialog');
+    if (!dialogs.length) return;
+    let savedY = 0, frozen = false;
+    const update = () => {
+      const anyOpen = dialogs.some(d => d.open);
+      if (anyOpen && !frozen) {
+        savedY = window.scrollY;
+        document.body.style.top = `-${savedY}px`;
+        document.documentElement.classList.add('modal-open');
+        frozen = true;
+      } else if (!anyOpen && frozen) {
+        document.documentElement.classList.remove('modal-open');
+        document.body.style.top = '';
+        window.scrollTo({ top: savedY, behavior: 'instant' });
+        frozen = false;
+      }
+    };
+    const mo = new MutationObserver(update);
+    dialogs.forEach(d => { mo.observe(d, { attributes: true, attributeFilter: ['open'] }); d.addEventListener('close', update); });
+  })();
+
   /* ---------- Active nav link while scrolling ---------- */
   const sections = $$('main section[id]');
   const navAnchors = $$('a[href^="#"]', links).filter(a => a.getAttribute('href') !== '#top');

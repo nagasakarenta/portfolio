@@ -1123,3 +1123,14 @@ main, .ticker, .footer { position: relative; z-index: 1; }
   .footer { padding: 16px 0 22px; font-size: 11px; }
   .footer .container { flex-direction: column; gap: 4px; align-items: center; text-align: center; }
 }
+
+/* ---------- No sideways movement: clip overflow inside dialogs and the page ---------- */
+html, body { overflow-x: clip; }
+.sendfx, .sendfx__stage { overflow: hidden; }
+.sendfx__stage { width: min(320px, 100%); }
+.cform__inner, .pcard__inner, .gallery__inner { overflow-x: hidden; overscroll-behavior: contain; }
+.cform__grid, .cform__actions { min-width: 0; }
+.field input, .field select, .field textarea { min-width: 0; max-width: 100%; }
+/* While a dialog is open the page behind it is frozen (also stops iOS from panning it). */
+html.modal-open, html.modal-open body { overflow: hidden; }
+html.modal-open body { position: fixed; left: 0; right: 0; width: 100%; }

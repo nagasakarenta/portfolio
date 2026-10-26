@@ -10,19 +10,26 @@
   <meta property="og:title" content="Renta Nagasaka — Indie Developer &amp; Solopreneur" />
   <meta property="og:description" content="個人事業主として iOS / Web / LLM アプリを一人で企画・開発・販売。大阪大学 情報科学科。" />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nagasakarenta.github.io/portfolio/" />
+  <meta property="og:image" content="https://nagasakarenta.github.io/portfolio/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Renta Nagasaka — Indie Developer &amp; Solopreneur" />
+  <meta name="twitter:description" content="個人事業主として iOS / Web アプリを企画・開発・販売。AI 導入・業務自動化、動画制作。大阪大学 情報科学科。" />
+  <meta name="twitter:image" content="https://nagasakarenta.github.io/portfolio/assets/og-image.jpg" />
+  <link rel="canonical" href="https://nagasakarenta.github.io/portfolio/" />
   <meta name="theme-color" content="#000000" />
   <link rel="icon" href="assets/favicon-64.png" type="image/png" sizes="64x64" />
   <link rel="apple-touch-icon" href="assets/icon-180.png" />
-  <link rel="stylesheet" href="styles.css?v=9" />
+  <link rel="stylesheet" href="styles.css?v=10" />
 </head>
 <body class="has-intro">
 
   <!-- ====== Intro / loading motion ====== -->
   <div class="intro" id="intro" aria-hidden="true">
-    <div class="intro__bg">
-      <span class="blob blob--1"></span>
-      <span class="blob blob--2"></span>
-    </div>
+    <div class="intro__bg"></div>
     <div class="intro__center">
       <svg class="intro__mark" viewBox="0 0 220 120" fill="none" aria-hidden="true">
         <!-- R -->
@@ -43,6 +50,9 @@
     <p class="intro__skip">クリックでスキップ</p>
   </div>
 
+
+  <a class="skip-link" href="#about">本文へスキップ</a>
+  <canvas class="bg" id="bg" aria-hidden="true"></canvas>
 
   <!-- ====== Global Nav ====== -->
   <header class="nav" id="nav">
@@ -70,11 +80,6 @@
 
     <!-- ====== Hero ====== -->
     <section class="hero" id="hero">
-      <div class="hero__bg" aria-hidden="true">
-        <span class="blob blob--1"></span>
-        <span class="blob blob--2"></span>
-        <span class="blob blob--3"></span>
-      </div>
       <div class="hero__content" id="heroContent">
         <img class="hero__avatar reveal" src="assets/avatar.jpg" alt="長坂 錬汰" width="96" height="96" />
         <p class="hero__eyebrow reveal" style="--d:.05s">Indie Developer · AI / DX / AX Consultant · 大阪大学 情報科学科</p>
@@ -555,6 +560,23 @@
     </div>
   </dialog>
 
-  <script src="script.js?v=5" defer></script>
+  <!-- ====== Lightbox (enlarged gallery image) ====== -->
+  <dialog class="lightbox" id="lightbox" aria-label="画像を拡大表示">
+    <button type="button" class="lightbox__close" id="lightboxClose" aria-label="閉じる">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+    </button>
+    <button type="button" class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="前の画像">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <figure class="lightbox__figure">
+      <img id="lightboxImg" src="" alt="" />
+      <figcaption id="lightboxCap"></figcaption>
+    </figure>
+    <button type="button" class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="次の画像">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </dialog>
+
+  <script src="script.js?v=7" defer></script>
 </body>
 </html>

@@ -48,6 +48,9 @@ Vercel / Netlify / Cloudflare Pages にフォルダをドラッグ＆ドロッ�
 - ベントーグリッドのスキルカード
 - スクロール連動で起き上がるデバイスモック（`animation-timeline: view()`、未対応ブラウザは JS でフォールバック）
 - スナップスクロールのプロジェクトカルーセル
+- 背景は `<canvas id="bg">` に描く光の線のアニメーション（`script.js` の「Background: flowing light lines」）。暗い領域が画面内にあるときだけ動き、スクロールとマウスにわずかに反応
+- ギャラリーの画像はクリックで拡大（ライトボックス、矢印キーで前後）
+- OG 画像は `assets/og-image.jpg`（1200×630）。`404.html` は GitHub Pages が自動で使う
 - 読み込み時のイントロ（ロゴの線画 → 名前 → 上方向へのワイプ）。合計約 1.5 秒。同じタブでは 1 回だけ再生、クリックでスキップ、`prefers-reduced-motion` では非表示。長さは `script.js` の `INTRO_MS`
 - 左上のアイコンでプロフィールカード（名刺）が開き、連絡先を .vcf で保存できる
 - ヒーローのタイピングアニメーション（文言は `#typewriter` の `data-phrases`）

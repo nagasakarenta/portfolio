@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>ページが見つかりません — Renta Nagasaka</title>
+  <style>
+    :root { --ease: cubic-bezier(.22,1,.36,1); }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100svh; display: grid; place-items: center; background: #000; color: #f5f5f7; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", "Hiragino Sans", "Noto Sans JP", sans-serif; -webkit-font-smoothing: antialiased; text-align: center; padding: 24px; }
+    .wrap { max-width: 640px; animation: in .9s var(--ease) both; }
+    @keyframes in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+    .code { font-size: clamp(72px, 16vw, 160px); font-weight: 700; letter-spacing: -.05em; line-height: 1; background: linear-gradient(90deg, #6ec1ff, #a98bff 45%, #ff8fb1); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    h1 { font-size: clamp(22px, 3vw, 32px); font-weight: 700; letter-spacing: -.02em; margin: 18px 0 10px; }
+    p { color: #a1a1a6; font-size: 17px; line-height: 1.5; margin: 0 0 28px; }
+    a.btn { display: inline-block; padding: 13px 26px; border-radius: 980px; background: #0071e3; color: #fff; text-decoration: none; font-weight: 500; font-size: 17px; transition: background .2s; }
+    a.btn:hover { background: #0077ed; }
+    a.btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+    .sub { margin-top: 22px; font-size: 13px; color: #6e6e73; }
+    .sub a { color: #2997ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="code">404</div>
+    <h1>このページは見つかりませんでした。</h1>
+    <p>URL が変わったか、ページが削除された可能性があります。</p>
+    <a class="btn" href="/portfolio/">トップページへ戻る</a>
+    <p class="sub">お探しのものが見つからない場合は <a href="mailto:nagasakarenta@gmail.com">nagasakarenta@gmail.com</a> まで。</p>
+  </main>
+</body>
+</html>

@@ -248,13 +248,13 @@
       facts: ['Swift', 'StoreKit', 'AdMob', 'Firebase', 'Cloudinary', 'Vercel', 'v1.5.1', '2025.06 —'],
       grid: 'styles',
       images: [
-        { src: 'assets/stylemagic/anime.jpg', cap: 'アニメ' },
-        { src: 'assets/stylemagic/anime90s.jpg', cap: '90 年代アニメ' },
-        { src: 'assets/stylemagic/watercolor.jpg', cap: '水彩' },
-        { src: 'assets/stylemagic/sketch.jpg', cap: 'スケッチ' },
-        { src: 'assets/stylemagic/cartoon.jpg', cap: 'カートゥーン' },
-        { src: 'assets/stylemagic/starewars.jpg', cap: 'SF 映画風' },
-        { src: 'assets/stylemagic/bikkuriman.jpg', cap: 'シール風イラスト' }
+        { src: 'assets/stylemagic/anime.webp', cap: 'アニメ' },
+        { src: 'assets/stylemagic/anime90s.webp', cap: '90 年代アニメ' },
+        { src: 'assets/stylemagic/watercolor.webp', cap: '水彩' },
+        { src: 'assets/stylemagic/sketch.webp', cap: 'スケッチ' },
+        { src: 'assets/stylemagic/cartoon.webp', cap: 'カートゥーン' },
+        { src: 'assets/stylemagic/starewars.webp', cap: 'SF 映画風' },
+        { src: 'assets/stylemagic/bikkuriman.webp', cap: 'シール風イラスト' }
       ],
       note: 'アプリ内のスタイル見本として実際に生成した画像です。'
     },
@@ -347,6 +347,128 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     paint();
+  }
+
+
+  /* ---------- Background: flowing light lines (canvas) ---------- */
+  const bg = $('#bg');
+  if (bg && bg.getContext) {
+    const ctx = bg.getContext('2d');
+    let w = 0, h = 0, dpr = 1, lines = [];
+    let t = 0, running = false, visible = true, rafId = 0;
+    let mouseX = 0, mouseY = 0, mx = 0, my = 0;      // pointer parallax (target / eased)
+    const isNarrow = () => window.innerWidth < 700;
+    const build = () => {
+      dpr = Math.min(1.5, window.devicePixelRatio || 1);
+      w = window.innerWidth; h = window.innerHeight;
+      bg.width = Math.round(w * dpr); bg.height = Math.round(h * dpr);
+      bg.style.width = w + 'px'; bg.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const n = isNarrow() ? 9 : 16;
+      lines = Array.from({ length: n }, (_, i) => {
+        const f = i / (n - 1);
+        return {
+          y: h * (0.12 + 0.76 * f),
+          amp1: 26 + 54 * Math.sin(f * Math.PI),        // bigger waves in the middle band
+          amp2: 10 + 18 * Math.random(),
+          k1: 0.0022 + 0.0012 * Math.random(),
+          k2: 0.0051 + 0.002 * Math.random(),
+          s1: 0.18 + 0.22 * Math.random(),
+          s2: 0.10 + 0.16 * Math.random(),
+          ph: Math.random() * Math.PI * 2,
+          alpha: 0.09 + 0.2 * Math.pow(Math.sin(f * Math.PI), 1.5),
+          width: 1.0 + 1.1 * Math.random(),
+          depth: 0.4 + 0.6 * Math.random()               // parallax factor
+        };
+      });
+    };
+    const gradient = () => {
+      const g = ctx.createLinearGradient(0, 0, w, 0);
+      g.addColorStop(0, '#2b7fff'); g.addColorStop(0.5, '#9a7bff'); g.addColorStop(1, '#ff7fae');
+      return g;
+    };
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      mx += (mouseX - mx) * 0.04; my += (mouseY - my) * 0.04;
+      const scroll = window.scrollY || 0;
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.lineCap = 'round';
+      const grad = gradient();
+      const step = isNarrow() ? 18 : 14;
+      for (const L of lines) {
+        const yBase = L.y - scroll * 0.06 * L.depth + my * 18 * L.depth;
+        const phase = L.ph + scroll * 0.0015;
+        ctx.beginPath();
+        for (let x = -40; x <= w + 40; x += step) {
+          const xx = x + mx * 14 * L.depth;
+          const y = yBase
+            + Math.sin(x * L.k1 + t * L.s1 + phase) * L.amp1
+            + Math.sin(x * L.k2 - t * L.s2 + phase * 0.5) * L.amp2;
+          if (x === -40) ctx.moveTo(xx, y); else ctx.lineTo(xx, y);
+        }
+        ctx.strokeStyle = grad;
+        ctx.globalAlpha = L.alpha;
+        ctx.lineWidth = L.width;
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = 'source-over';
+    };
+    const loop = (now) => {
+      if (!running) return;
+      t = now * 0.001;
+      draw();
+      rafId = requestAnimationFrame(loop);
+    };
+    const start = () => { if (running || reduceMotion) return; running = true; rafId = requestAnimationFrame(loop); };
+    const stop = () => { running = false; cancelAnimationFrame(rafId); };
+    build();
+    if (reduceMotion) { t = 1; draw(); }
+    else {
+      // Run only while a dark area (hero, dark sections, footer) is on screen and the tab is visible.
+      const darkAreas = $$('.hero, .section--dark, .ticker, .footer');
+      let onScreen = new Set();
+      const dio = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) onScreen.add(e.target); else onScreen.delete(e.target); });
+        visible = onScreen.size > 0;
+        if (visible && !document.hidden) start(); else stop();
+      }, { rootMargin: '10% 0px' });
+      darkAreas.forEach(el => dio.observe(el));
+      document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else if (visible) start(); });
+      window.addEventListener('pointermove', (e) => {
+        mouseX = (e.clientX / w - 0.5) * 2; mouseY = (e.clientY / h - 0.5) * 2;
+      }, { passive: true });
+      let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(build, 120); });
+      start();
+    }
+  }
+
+  /* ---------- Lightbox for gallery images ---------- */
+  const lightbox = $('#lightbox');
+  if (lightbox && typeof lightbox.showModal === 'function') {
+    const lbImg = $('#lightboxImg'), lbCap = $('#lightboxCap');
+    let items = [], idx = 0;
+    const show = (i) => {
+      idx = (i + items.length) % items.length;
+      lbImg.src = items[idx].src; lbImg.alt = items[idx].cap; lbCap.textContent = `${items[idx].cap} · ${idx + 1} / ${items.length}`;
+      $('#lightboxPrev').style.visibility = $('#lightboxNext').style.visibility = items.length > 1 ? 'visible' : 'hidden';
+    };
+    const grid = $('#galleryGrid');
+    if (grid) grid.addEventListener('click', (e) => {
+      const fig = e.target.closest('figure'); if (!fig) return;
+      const figs = $$('figure', grid);
+      items = figs.map(f => ({ src: $('img', f).src, cap: $('figcaption', f).textContent }));
+      show(figs.indexOf(fig));
+      lightbox.showModal();
+    });
+    $('#lightboxClose').addEventListener('click', () => lightbox.close());
+    $('#lightboxPrev').addEventListener('click', () => show(idx - 1));
+    $('#lightboxNext').addEventListener('click', () => show(idx + 1));
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.close(); });
+    lightbox.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); show(idx + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); show(idx - 1); }
+    });
   }
 
   /* ---------- Active nav link while scrolling ---------- */

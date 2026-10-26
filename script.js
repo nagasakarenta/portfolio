@@ -471,6 +471,26 @@
     });
   }
 
+
+  /* ---------- mailto fallback: also copy the address and confirm ---------- */
+  const toast = (msg) => {
+    let el = $('#toast');
+    if (!el) { el = document.createElement('div'); el.id = 'toast'; el.className = 'toast'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
+    el.textContent = msg; el.classList.add('is-on');
+    clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('is-on'), 2600);
+  };
+  $$('a[href^="mailto:"]').forEach(a => {
+    a.addEventListener('click', () => {
+      const addr = a.getAttribute('href').replace(/^mailto:/, '').split('?')[0];
+      // Always tell the visitor the address; copy it too when the browser allows.
+      toast(`メールアプリを開いています。開かない場合は ${addr} 宛にお送りください。`);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(addr).then(() => toast(`${addr} をコピーしました。メールアプリが開かない場合は貼り付けて送ってください。`)).catch(() => {});
+      }
+      // the mailto: navigation itself still proceeds
+    });
+  });
+
   /* ---------- Active nav link while scrolling ---------- */
   const sections = $$('main section[id]');
   const navAnchors = $$('a[href^="#"]', links).filter(a => a.getAttribute('href') !== '#top');

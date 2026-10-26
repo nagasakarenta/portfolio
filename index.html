@@ -13,7 +13,7 @@
   <meta name="theme-color" content="#000000" />
   <link rel="icon" href="assets/favicon-64.png" type="image/png" sizes="64x64" />
   <link rel="apple-touch-icon" href="assets/icon-180.png" />
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=8" />
 </head>
 <body class="has-intro">
 
@@ -312,27 +312,97 @@
         <header class="section__head reveal">
           <p class="section__eyebrow">Work with me</p>
           <h2 class="section__title split">Services.</h2>
-          <p class="section__lead">個人事業主として、こんなご相談を受けています。</p>
+          <p class="section__lead">個人事業主として受けている相談と、具体的にお渡しできるもの。</p>
         </header>
-        <div class="services__grid">
-          <article class="service reveal tilt">
-            <span class="service__num">01</span>
-            <h3>AI 導入・業務自動化</h3>
-            <p>Dify / n8n / Google Apps Script で、問い合わせ対応・資料作成・データ集計などの業務を自動化。現場ヒアリングから PoC、運用定着まで。社外に出せないデータには、ローカル LLM（Ollama / llama.cpp）での構築にも対応します。</p>
-            <ul class="chips chips--light"><li>Dify</li><li>n8n</li><li>GAS</li><li>Local LLM</li><li>LLM API</li></ul>
+        <div class="services__list">
+
+          <article class="service service--row reveal tilt">
+            <div class="service__intro">
+              <span class="service__num">01</span>
+              <h3>AI 導入・業務自動化</h3>
+              <p class="service__pitch">毎日くり返している手作業を、AI と自動化で手放す。</p>
+              <p class="service__proof">実績: 建設テック企業で GAS による業務 DX から AI 導入まで。業務委託先で Dify / n8n の AI ワークフロー構築。</p>
+              <a href="mailto:nagasakarenta@gmail.com?subject=AI%E5%B0%8E%E5%85%A5%E3%83%BB%E6%A5%AD%E5%8B%99%E8%87%AA%E5%8B%95%E5%8C%96%E3%81%AE%E7%9B%B8%E8%AB%87" class="link-arrow">この内容で相談する</a>
+            </div>
+            <div class="service__body">
+              <h4>こんな相談に</h4>
+              <ul class="service__cases">
+                <li>問い合わせ対応や定型のメール返信に時間を取られている</li>
+                <li>スプレッドシートへの転記・集計・レポート作成を毎週手でやっている</li>
+                <li>ChatGPT を入れてみたが、業務に定着しない</li>
+                <li>社外にデータを出せないので AI を使えずにいる</li>
+              </ul>
+              <h4>できること</h4>
+              <ul class="service__deliverables">
+                <li><strong>業務の棚卸し</strong> — ヒアリングで自動化できる工程を洗い出し、効果の大きい順に整理</li>
+                <li><strong>AI ワークフロー構築</strong> — Dify / n8n で問い合わせの一次対応、議事録・資料の下書き、情報の分類・要約を自動化</li>
+                <li><strong>Google Apps Script 自動化</strong> — スプレッドシート・Gmail・フォーム・カレンダーをつないで定型作業を無人化</li>
+                <li><strong>社内文書を参照する AI</strong> — RAG で自社マニュアルや過去案件に基づいて回答。機密データはローカル LLM（Ollama / llama.cpp）で閉域運用</li>
+                <li><strong>AI ツールの選定・定着</strong> — ChatGPT / Claude / Gemini / Copilot などを用途別に比較し、利用ルールと使い方の説明会まで</li>
+              </ul>
+              <p class="service__flow"><strong>進め方</strong>: ヒアリング（無料）→ 小さく PoC（1〜2 週間）→ 本導入 → 運用と改善</p>
+              <ul class="chips chips--light"><li>Dify</li><li>n8n</li><li>GAS</li><li>RAG</li><li>Ollama</li><li>llama.cpp</li><li>OpenAI / Claude API</li></ul>
+            </div>
           </article>
-          <article class="service reveal tilt" style="--d:.08s">
-            <span class="service__num">02</span>
-            <h3>アプリ・Web 開発</h3>
-            <p>iOS アプリ（Swift / React Native）と Web アプリ（Next.js）を、企画から公開・計測まで。App Store 申請や課金設計を含めて一人で完結できます。</p>
-            <ul class="chips chips--light"><li>Swift</li><li>Next.js</li><li>Firebase</li><li>App Store</li></ul>
+
+          <article class="service service--row reveal tilt">
+            <div class="service__intro">
+              <span class="service__num">02</span>
+              <h3>アプリ・Web 開発</h3>
+              <p class="service__pitch">アイデアを、ストアに並ぶ製品まで一人で運ぶ。</p>
+              <p class="service__proof">実績: 個人で iOS アプリ 6 本を公開、App Store 有料ランキング 18 位。英作文添削 AI、IPA 試験トレーナーなど。</p>
+              <a href="mailto:nagasakarenta@gmail.com?subject=%E3%82%A2%E3%83%97%E3%83%AA%E3%83%BBWeb%E9%96%8B%E7%99%BA%E3%81%AE%E7%9B%B8%E8%AB%87" class="link-arrow">この内容で相談する</a>
+            </div>
+            <div class="service__body">
+              <h4>こんな相談に</h4>
+              <ul class="service__cases">
+                <li>新規サービスのプロトタイプを数週間で形にして反応を見たい</li>
+                <li>iOS アプリを出したいが、審査や課金の設定が分からない</li>
+                <li>社内ツール・LP・会員サイトを短期間で用意したい</li>
+                <li>AI（LLM）を組み込んだアプリを作りたい</li>
+              </ul>
+              <h4>できること</h4>
+              <ul class="service__deliverables">
+                <li><strong>要件整理と画面設計</strong> — やりたいことを機能に分解し、画面フローとスケジュールに落とす</li>
+                <li><strong>iOS アプリ開発</strong> — Swift / React Native。App 内課金・サブスク、広告、プッシュ通知、ログイン</li>
+                <li><strong>Web アプリ・LP</strong> — Next.js、Firebase、Vercel。フォーム、認証、決済、管理画面</li>
+                <li><strong>LLM 組み込み</strong> — OpenAI / Claude API を使った添削・要約・チャット機能と、精度を測る評価の仕組み</li>
+                <li><strong>App Store 申請と公開後</strong> — 審査対応、ストア文言と画像、公開後の計測（Analytics）と改善</li>
+              </ul>
+              <p class="service__flow"><strong>進め方</strong>: 要件整理 → 動くプロトタイプ → 本開発 → 公開 → 計測と改善</p>
+              <ul class="chips chips--light"><li>Swift</li><li>React Native</li><li>Next.js</li><li>TypeScript</li><li>Firebase</li><li>Vercel</li><li>App Store</li></ul>
+            </div>
           </article>
-          <article class="service reveal tilt" style="--d:.16s">
-            <span class="service__num">03</span>
-            <h3>動画制作・AI 動画生成</h3>
-            <p>YouTube・企業広報で 200 本以上の納品実績。アプリのプロモ動画やサービス紹介動画を、企画から編集まで。Kling などの生成 AI 動画や、ComfyUI によるワークフロー構築を組み合わせた、少人数・短納期の映像制作にも対応します。</p>
-            <ul class="chips chips--light"><li>Premiere Pro</li><li>After Effects</li><li>Kling</li><li>ComfyUI</li><li>Canva</li></ul>
+
+          <article class="service service--row reveal tilt">
+            <div class="service__intro">
+              <span class="service__num">03</span>
+              <h3>動画制作・AI 動画生成</h3>
+              <p class="service__pitch">200 本納品してきた編集力に、生成 AI のスピードを足す。</p>
+              <p class="service__proof">実績: YouTube・企業広報向けに 4 年で 200 本以上を納品。CrowdWorks クライアント評価 4.7（51 件）。</p>
+              <a href="mailto:nagasakarenta@gmail.com?subject=%E5%8B%95%E7%94%BB%E5%88%B6%E4%BD%9C%E3%83%BBAI%E5%8B%95%E7%94%BB%E7%94%9F%E6%88%90%E3%81%AE%E7%9B%B8%E8%AB%87" class="link-arrow">この内容で相談する</a>
+            </div>
+            <div class="service__body">
+              <h4>こんな相談に</h4>
+              <ul class="service__cases">
+                <li>アプリやサービスの紹介動画・プロモ動画が欲しい</li>
+                <li>YouTube や SNS の動画を継続的に出したいが手が回らない</li>
+                <li>撮影の予算や時間がないが、映像は欲しい</li>
+                <li>生成 AI で動画を作りたいが、品質を安定させられない</li>
+              </ul>
+              <h4>できること</h4>
+              <ul class="service__deliverables">
+                <li><strong>企画・構成・台本</strong> — 目的と視聴者に合わせて、尺と見せ場を設計</li>
+                <li><strong>編集・モーショングラフィックス</strong> — Premiere Pro / After Effects。テロップ、アニメーション、カラー、音</li>
+                <li><strong>生成 AI 映像</strong> — Kling などで撮影なしの映像素材を生成し、実写やモーションと合成</li>
+                <li><strong>ComfyUI ワークフロー構築</strong> — 画像・動画生成の手順をワークフロー化し、同じ品質で量産できる状態に</li>
+                <li><strong>展開物まで</strong> — 縦型ショート・広告用の尺違い書き出し、サムネイル・バナー（Canva）</li>
+              </ul>
+              <p class="service__flow"><strong>進め方</strong>: 目的の確認 → 構成案 → 初稿 → 修正 2 回まで → 納品</p>
+              <ul class="chips chips--light"><li>Premiere Pro</li><li>After Effects</li><li>Kling</li><li>ComfyUI</li><li>Canva</li></ul>
+            </div>
           </article>
+
         </div>
         <div class="featured__links reveal">
           <a href="mailto:nagasakarenta@gmail.com" class="link-arrow">相談してみる</a>
@@ -485,6 +555,6 @@
     </div>
   </dialog>
 
-  <script src="script.js?v=4" defer></script>
+  <script src="script.js?v=5" defer></script>
 </body>
 </html>

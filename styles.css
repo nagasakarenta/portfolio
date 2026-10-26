@@ -879,3 +879,88 @@ body:not(.has-intro) .hero__content { opacity: 1; }
 }
 /* On narrow screens, phrase blocks in the hero make ragged lines — let the text flow instead. */
 @media (max-width: 600px) { .hero__sub .ph { display: inline; } }
+
+/* ==========================================================
+   Scroll motion — stacked sections, ambient light, scroll-linked entrances
+   ========================================================== */
+
+/* Sections stack like rounded cards over the one before. */
+.section { position: relative; border-radius: 40px 40px 0 0; margin-top: -40px; padding-top: calc(clamp(96px, 12vw, 160px) + 40px); }
+.ticker { padding-bottom: calc(18px + 40px); }
+.footer { position: relative; }
+@media (max-width: 600px) { .section { border-radius: 28px 28px 0 0; margin-top: -28px; padding-top: calc(clamp(96px, 12vw, 160px) + 28px); } .ticker { padding-bottom: calc(18px + 28px); } }
+
+/* Ambient light that lives behind every dark section and drifts with the page scroll.
+   The fixed pseudo-elements are clipped to their section via clip-path. */
+.section--dark { clip-path: inset(0 round 40px 40px 0 0); isolation: isolate; }
+@media (max-width: 600px) { .section--dark { clip-path: inset(0 round 28px 28px 0 0); } }
+.section--dark::before, .section--dark::after {
+  content: ""; position: fixed; z-index: -1; pointer-events: none;
+  width: 70vmax; height: 70vmax; border-radius: 50%;
+  filter: blur(80px); opacity: .32; mix-blend-mode: screen; will-change: transform;
+}
+.section--dark::before { background: radial-gradient(circle, #1f6fff 0%, transparent 60%); top: -30vmax; left: -20vmax; animation: amb-a 30s ease-in-out infinite alternate; }
+.section--dark::after  { background: radial-gradient(circle, #8a5cff 0%, #ff5c8a 35%, transparent 62%); bottom: -35vmax; right: -25vmax; animation: amb-b 36s ease-in-out infinite alternate; }
+@keyframes amb-a { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(18vw, 22vh, 0) scale(1.2); } }
+@keyframes amb-b { from { transform: translate3d(0,0,0) scale(1.1); } to { transform: translate3d(-16vw, -24vh, 0) scale(.9) rotate(30deg); } }
+
+/* Where scroll-driven animations exist, tie the ambient light and entrances to the scroll position. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .section--dark::before { animation: amb-scroll-a linear both; animation-timeline: scroll(root); }
+    .section--dark::after  { animation: amb-scroll-b linear both; animation-timeline: scroll(root); }
+    @keyframes amb-scroll-a { from { transform: translate3d(-10vw, -10vh, 0) scale(1); filter: blur(80px) hue-rotate(0deg); } to { transform: translate3d(28vw, 40vh, 0) scale(1.25); filter: blur(80px) hue-rotate(70deg); } }
+    @keyframes amb-scroll-b { from { transform: translate3d(10vw, 10vh, 0) scale(1.1) rotate(0deg); } to { transform: translate3d(-30vw, -45vh, 0) scale(.95) rotate(50deg); } }
+
+    /* Section headers drift up as they enter. */
+    .section__head { animation: enter-up linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; }
+    /* Cards, services and timeline rows settle in while scrolling (scrubbed, not timed). */
+    .card, .service, .timeline__item, .feature, .features { animation: enter-up linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+    .card:nth-child(even), .service:nth-child(2) { animation-range: entry 5% entry 50%; }
+    .card:nth-child(3n), .service:nth-child(3) { animation-range: entry 10% entry 55%; }
+    /* Project tiles scale up as they slide into the carousel. */
+    .tile { animation: tile-enter linear both; animation-timeline: view(x); animation-range: entry 0% entry 90%; }
+    /* The live demo frame rises and straightens on scroll (already defined for the device). */
+    .featured__hint { animation: fade-up linear both; animation-timeline: view(); animation-range: entry 0% entry 80%; }
+    /* The contact headline zooms gently into place. */
+    .contact__title { animation: zoom-in linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
+  }
+}
+@keyframes enter-up { from { translate: 0 56px; opacity: 0; } to { translate: 0 0; opacity: 1; } }
+@keyframes tile-enter { from { scale: .92; opacity: .45; } to { scale: 1; opacity: 1; } }
+@keyframes fade-up { from { translate: 0 16px; opacity: 0; } to { translate: 0 0; opacity: 1; } }
+@keyframes zoom-in { from { scale: .9; opacity: .2; } to { scale: 1; opacity: 1; } }
+
+/* Scroll-linked text highlight (About): characters brighten as they pass through the viewport. */
+.statement .ch { color: color-mix(in srgb, currentColor calc(var(--p, 1) * 100%), rgba(0,0,0,.14)); transition: color .12s linear; }
+.statement strong .ch { color: color-mix(in srgb, var(--ink) calc(var(--p, 1) * 100%), rgba(0,0,0,.14)); }
+.statement.is-live p { color: var(--ink-2); }
+
+@media (prefers-reduced-motion: reduce) {
+  .section--dark::before, .section--dark::after { animation: none; }
+  .statement .ch { color: inherit; }
+}
+
+/* ---------- Services: detailed rows ---------- */
+.services__list { display: grid; gap: 20px; }
+.service--row { display: grid; grid-template-columns: minmax(260px, 1fr) 2fr; gap: 36px; padding: 40px 40px 36px; }
+.service__intro { display: flex; flex-direction: column; align-items: flex-start; }
+.service__pitch { font-size: 19px; font-weight: 600; letter-spacing: -.015em; color: var(--ink); line-height: 1.4; margin-bottom: 14px; }
+.service__proof { font-size: 14px; line-height: 1.6; color: var(--ink-2); margin-bottom: 18px; }
+.service__intro .link-arrow { font-size: 16px; margin-top: auto; }
+.service__body h4 { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--blue-dark); margin: 0 0 10px; }
+.service__body h4 + ul { margin-bottom: 22px; }
+.service__cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px 18px; }
+.service__cases li { position: relative; padding-left: 18px; font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+.service__cases li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 6px; height: 6px; border-radius: 50%; background: var(--blue-dark); }
+.service__deliverables { display: grid; gap: 10px; }
+.service__deliverables li { font-size: 15px; line-height: 1.6; color: var(--ink-2); padding-left: 18px; position: relative; }
+.service__deliverables li::before { content: ""; position: absolute; left: 0; top: .72em; width: 8px; height: 2px; background: var(--ink); border-radius: 2px; }
+.service__deliverables strong { color: var(--ink); font-weight: 700; }
+.service__flow { font-size: 14px; color: var(--ink-2); padding: 12px 14px; background: rgba(0,0,0,.04); border-radius: 12px; margin-bottom: 18px; }
+.service__flow strong { color: var(--ink); }
+.service--row .chips { margin-top: 0; padding-top: 0; }
+@media (max-width: 900px) {
+  .service--row { grid-template-columns: 1fr; gap: 24px; padding: 30px 26px 28px; }
+  .service__intro .link-arrow { margin-top: 6px; }
+}

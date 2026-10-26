@@ -305,6 +305,50 @@
     gdlg.addEventListener('click', (e) => { if (e.target === gdlg) gdlg.close(); });
   }
 
+
+  /* ---------- About: scroll-linked text highlight ---------- */
+  const statement = $('.statement');
+  if (statement && !reduceMotion && CSS.supports('color', 'color-mix(in srgb, red 50%, blue)')) {
+    // Wrap every character (Latin words stay whole) in a span we can light up.
+    const wrapText = (node) => {
+      if (node.nodeType === 3) {
+        const text = node.nodeValue;
+        if (!text.trim()) return;
+        const frag = document.createDocumentFragment();
+        const tokens = text.match(/[A-Za-z0-9][A-Za-z0-9./+&-]*|\s+|[^\sA-Za-z0-9]/g) || [];
+        tokens.forEach(tok => {
+          if (/^\s+$/.test(tok)) { frag.appendChild(document.createTextNode(tok)); return; }
+          const sp = document.createElement('span'); sp.className = 'ch'; sp.textContent = tok; frag.appendChild(sp);
+        });
+        node.parentNode.replaceChild(frag, node);
+      } else if (node.nodeType === 1 && !node.classList.contains('statement__lead')) {
+        [...node.childNodes].forEach(wrapText);
+      }
+    };
+    $$('p:not(.statement__lead)', statement).forEach(p => [...p.childNodes].forEach(wrapText));
+    const chars = $$('.ch', statement);
+    statement.classList.add('is-live');
+    let active = false, ticking = false;
+    const paint = () => {
+      ticking = false;
+      const vh = window.innerHeight;
+      const start = vh * 0.88, span = vh * 0.38;   // a char is fully lit once it rises above ~50% of the viewport
+      chars.forEach(ch => {
+        const y = ch.getBoundingClientRect().top + ch.offsetHeight / 2;
+        const p = Math.min(1, Math.max(0, (start - y) / span));
+        ch.style.setProperty('--p', p.toFixed(2));
+      });
+    };
+    const onScroll = () => { if (!active || ticking) return; ticking = true; requestAnimationFrame(paint); };
+    new IntersectionObserver((entries) => {
+      active = entries.some(e => e.isIntersecting);
+      if (active) onScroll();
+    }, { rootMargin: '20% 0px 20% 0px' }).observe(statement);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    paint();
+  }
+
   /* ---------- Active nav link while scrolling ---------- */
   const sections = $$('main section[id]');
   const navAnchors = $$('a[href^="#"]', links).filter(a => a.getAttribute('href') !== '#top');

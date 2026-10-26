@@ -595,6 +595,14 @@
     dialogs.forEach(d => { mo.observe(d, { attributes: true, attributeFilter: ['open'] }); d.addEventListener('close', update); });
   })();
 
+
+  /* ---------- Timeline fallback: mark the list as seen so the line can draw without scroll timelines ---------- */
+  const timeline = $('.timeline');
+  if (timeline && 'IntersectionObserver' in window) {
+    const tio = new IntersectionObserver((es) => { if (es.some(e => e.isIntersecting)) { timeline.classList.add('in'); tio.disconnect(); } }, { threshold: 0.05 });
+    tio.observe(timeline);
+  }
+
   /* ---------- Active nav link while scrolling ---------- */
   const sections = $$('main section[id]');
   const navAnchors = $$('a[href^="#"]', links).filter(a => a.getAttribute('href') !== '#top');

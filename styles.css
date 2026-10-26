@@ -154,7 +154,7 @@ button { font: inherit; cursor: pointer; }
   padding: 0 8px;
 }
 .nav__toggle span {
-  display: block; height: 1.5px; background: #fff; border-radius: 2px;
+  display: block; width: 20px; height: 1.5px; background: #fff; border-radius: 2px; flex: none;
   transition: transform .35s var(--ease), opacity .3s;
 }
 .nav.is-open .nav__toggle span:first-child { transform: translateY(3.75px) rotate(45deg); }
@@ -1136,3 +1136,46 @@ html, body { overflow-x: clip; }
 /* While a dialog is open the page behind it is frozen (also stops iOS from panning it). */
 html.modal-open, html.modal-open body { overflow: hidden; }
 html.modal-open body { position: fixed; left: 0; right: 0; width: 100%; }
+
+/* ==========================================================
+   Experience: the line grows downward as you scroll; dots light up in order
+   ========================================================== */
+.timeline::before {
+  width: 2px; left: -0.5px; top: 10px; bottom: 10px;
+  background: linear-gradient(180deg, #0071e3, #8a5cff 60%, rgba(138,92,255,.25));
+  transform-origin: top; transform: scaleY(0);
+}
+.timeline::after {
+  /* glowing head that travels with the tip of the line */
+  content: ""; position: absolute; left: -5px; top: 10px; width: 11px; height: 11px; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 0 4px rgba(0,113,227,.25), 0 0 24px 6px rgba(41,151,255,.55);
+  opacity: 0;
+}
+.timeline__item::before {
+  background: var(--offwhite); border: 2px solid rgba(0,113,227,.35);
+  transform: scale(.6); opacity: .5;
+  transition: transform .5s var(--ease), opacity .5s, background .5s, box-shadow .5s;
+}
+.timeline__item.in::before, .timeline__item.is-lit::before {
+  transform: scale(1); opacity: 1; background: var(--blue-dark); border-color: var(--blue-dark);
+  box-shadow: 0 0 0 6px rgba(0,113,227,.14);
+}
+.timeline__item:first-child::before { box-shadow: 0 0 0 6px rgba(0,113,227,.15); }
+.timeline__item time { transition: color .4s; }
+.timeline__item > div { transform: translateX(0); }
+/* Without scroll-driven animations the line simply shows once the list is on screen */
+.timeline.in::before { transform: scaleY(1); transition: transform 1.6s var(--ease); }
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .timeline::before, .timeline.in::before { transition: none; animation: draw-line linear both; animation-timeline: view(); animation-range: entry 25% exit 10%; }
+    .timeline::after { animation: head-travel linear both; animation-timeline: view(); animation-range: entry 25% exit 10%; }
+    /* each row: slide in from the left while its part of the line is being drawn */
+    .timeline__item { animation: row-in linear both; animation-timeline: view(); animation-range: entry 0% entry 55%; }
+    .timeline__item::before { animation: dot-in linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; transition: none; }
+  }
+}
+@keyframes draw-line { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes head-travel { 0% { top: 10px; opacity: 0; } 4% { opacity: 1; } 96% { opacity: 1; } 100% { top: calc(100% - 20px); opacity: 0; } }
+@keyframes row-in { from { translate: -18px 0; opacity: 0; } to { translate: 0 0; opacity: 1; } }
+@keyframes dot-in { from { transform: scale(.4); opacity: .3; background: var(--offwhite); box-shadow: 0 0 0 0 rgba(0,113,227,0); } 70% { transform: scale(1.25); } to { transform: scale(1); opacity: 1; background: var(--blue-dark); border-color: var(--blue-dark); box-shadow: 0 0 0 6px rgba(0,113,227,.14); } }
+@media (prefers-reduced-motion: reduce) { .timeline::before { transform: none; } .timeline::after { display: none; } .timeline__item::before { transform: none; opacity: 1; background: var(--blue-dark); } }

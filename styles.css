@@ -70,6 +70,7 @@ button { font: inherit; cursor: pointer; }
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
 /* ---------- Arrow links (Apple blue "Learn more >") ---------- */
@@ -822,8 +823,9 @@ button.nav__brand:hover { background: rgba(255,255,255,.08); }
 @media (prefers-reduced-motion: reduce) { .gallery[open] .gallery__inner { animation: none; } }
 
 /* ---------- Japanese line breaking ---------- */
-/* .ph = a phrase that must not break internally (works in every browser). */
-.ph { display: inline-block; }
+/* .ph = a phrase that must not break internally. Kept inline (not inline-block): WebKit does not paint
+   background-clip:text through inline-block children, which made gradient text vanish on iOS. */
+.ph { display: inline; white-space: nowrap; }
 /* Phrase-aware wrapping where supported (Chrome), balanced headings everywhere. */
 h2, h3, p, li, dd { word-break: auto-phrase; }
 .section__title, .section__lead, .contact__title, .contact__lead, .statement__lead { text-wrap: balance; }
@@ -878,7 +880,7 @@ body:not(.has-intro) .hero__content { opacity: 1; }
   body.has-intro .hero__content { opacity: 1; transform: none; transition: none; }
 }
 /* On narrow screens, phrase blocks in the hero make ragged lines — let the text flow instead. */
-@media (max-width: 600px) { .hero__sub .ph { display: inline; } }
+@media (max-width: 600px) { .hero__sub .ph { white-space: normal; } }
 
 /* ==========================================================
    Scroll motion — stacked sections, ambient light, scroll-linked entrances

@@ -826,7 +826,8 @@ button.nav__brand:hover { background: rgba(255,255,255,.08); }
 .ph { display: inline-block; }
 /* Phrase-aware wrapping where supported (Chrome), balanced headings everywhere. */
 h2, h3, p, li, dd { word-break: auto-phrase; }
-.section__title, .section__lead, .contact__title, .contact__lead, .hero__sub, .statement__lead { text-wrap: balance; }
+.section__title, .section__lead, .contact__title, .contact__lead, .statement__lead { text-wrap: balance; }
+.hero__sub { max-width: 860px; }
 .contact__title { font-size: clamp(36px, 6.4vw, 84px); }
 .contact__lead { font-size: clamp(18px, 2vw, 24px); }
 
@@ -876,3 +877,5 @@ body:not(.has-intro) .hero__content { opacity: 1; }
   .intro { display: none; }
   body.has-intro .hero__content { opacity: 1; transform: none; transition: none; }
 }
+/* On narrow screens, phrase blocks in the hero make ragged lines — let the text flow instead. */
+@media (max-width: 600px) { .hero__sub .ph { display: inline; } }
